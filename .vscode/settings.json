@@ -1,0 +1,16 @@
+{
+    "editor.formatOnSave": true,
+    "files.eol": "\n",
+    "files.trimTrailingWhitespace": true,
+    "[lua]": {
+        "editor.defaultFormatter": "Koihik.vscode-lua-format"
+    },
+    "[xml]": {
+        "editor.tabSize": 2
+    },
+    "lua.preferLuaCheckErrors": true,
+    "lua.targetVersion": "5.3",
+    "yaml.schemas": {
+        "https://json.schemastore.org/github-workflow.json": "**/.github/workflows/*.yml"
+    },
+}
