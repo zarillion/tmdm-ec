@@ -3,4 +3,5 @@
 ## Version: 1
 ## Notes: The TMDM encounter helper
 ## SavedVariables: TMDM_EC_DB
+
 main.lua
