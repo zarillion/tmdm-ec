@@ -5,7 +5,7 @@
 ## SavedVariables: TMDM_EC_DB
 
 embeds.xml
-AddonMessageV1.lua
-AddonMessageV2.lua
-VersionCheck.lua
+# VersionCheck.lua
 main.lua
+AddonMessageV1.lua
+# AddonMessageV2.lua
