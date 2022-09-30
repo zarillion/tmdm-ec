@@ -4,4 +4,5 @@
 ## Notes: The TMDM encounter helper
 ## SavedVariables: TMDM_EC_DB
 
+embeds.xml
 main.lua
