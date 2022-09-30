@@ -15,7 +15,7 @@ column_limit: 80
 column_table_limit: 80
 continuation_indent_width: 4
 double_quote_to_single_quote: false
-extra_sep_at_table_end: false
+extra_sep_at_table_end: true
 indent_width: 4
 keep_simple_control_block_one_line: true
 keep_simple_function_one_line: true

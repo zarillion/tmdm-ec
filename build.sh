@@ -40,13 +40,13 @@ EOF
 
 function _lua_files () {
     local type=${1:-all}
-    local files=($(find src/ -name *.lua))
+    local files=($(find src/ -name *.lua | grep -v src/Lib/))
     printf '%s\n' "${files[@]}"
 }
 
 function run-linter() {
     local quiet=$(if [ -z "${VERBOSE:-}" ]; then echo -n "-q"; fi)
-    luacheck src ${quiet}
+    luacheck $(_lua_files) ${quiet}
 }
 
 function run-tests() {
