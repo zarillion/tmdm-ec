@@ -23,35 +23,50 @@ Some examples:
     "c=SAY Something is on me...;s=bikehorn"
     "m=|cff00ff00COLOR TEST|r MESSAGE"
 
-]] --
+Caveats:
+
+  * All messages received are assumed to be for us. This means the WHISPER channel must
+    be used to direct individuals, which does not work cross-realm.
+  * The message is limited to 250 characters as no serializer/compression or comms API
+    is used to split the messages.
+  * Duration is applied to both the glow and display if sent in the same message.
+
+]]
+
 local ADDON_NAME, ns = ...
 
 local function tochat(value)
-    -- value == "CHANNEL MESSAGE", only allow SAY,YELL,RAID
-    local channel, message = value:split(" ", 2)
-    if message and (channel == "SAY" or channel == "YELL" or channel == "RAID") then
-        return {channel = channel, message = message}
-    end
+	-- value == "CHANNEL [TARGET] MESSAGE"; TARGET only set for WHISPER channel
+	local channel, message = strsplit(" ", value, 2)
+	local target = nil
+
+	if #channel > 0 and #message > 0 then
+		if channel == "WHISPER" then
+			target, message = strsplit(" ", message, 2)
+		end
+		return { channel = channel, message = message, target = target }
+	end
 end
 
 local function toplayerlist(value)
-    local players = {}
-    for i, name in ipairs {value:split(",")} do
-        players[#players + 1] = strtrim(name)
-    end
-    return players
+	-- value == PlayerName1,PlayerName2,PlayerName3
+	local players = {}
+	for i, name in ipairs({ strsplit(",", value) }) do
+		players[#players + 1] = strtrim(name)
+	end
+	return players
 end
 
 local addonMessageFields = {
-    c = {"chat", tochat},
-    d = {"duration", tonumber},
-    e = {"emote", tostring},
-    g = {"glow", toplayerlist},
-    m = {"message1", tostring},
-    m1 = {"message1", tostring},
-    m2 = {"message2", tostring},
-    m3 = {"message3", tostring},
-    s = {"sound", tostring},
+	c = { "chat", tochat },
+	d = { "duration", tonumber },
+	e = { "emote", tostring },
+	g = { "glow", toplayerlist },
+	m = { "message2", tostring },
+	m1 = { "message1", tostring },
+	m2 = { "message2", tostring },
+	m3 = { "message3", tostring },
+	s = { "sound", tostring },
 }
 
 --[[ parseField
@@ -60,12 +75,13 @@ Parse a field from the addon message. Each supported field has a mapped
 full-name to be used in the resulting data table, and an optional cast
 function.
 
-]] --
-
+]]
 local function parseField(field, value)
-    local name, cast = unpack(addonMessageFields[field] or {})
-    if name then return name, (cast or tostring)(value) end
-    print(("TMDM-EC ERROR: unknown field \"%s\""):format(field))
+	local name, cast = unpack(addonMessageFields[field] or {})
+	if name then
+		return name, (cast or tostring)(value)
+	end
+	print(('TMDM-EC ERROR: unknown field "%s"'):format(field))
 end
 
 --[[ processMessage
@@ -73,21 +89,45 @@ end
 Parse the addon message into its separate client instructions and then execute
 each of them. Ignore instruction types that are unrecognized.
 
-]] --
+]]
 local function processMessage(addonMessage)
-    print("Parsing:", addonMessage, ("(length=%d)"):format(#addonMessage))
+	-- print("Parsing:", addonMessage, ("(length=%d)"):format(#addonMessage))
 
-    -- convert the message to a table of instructions
-    local data = {}
-    for i, chunk in ipairs {addonMessage:split(";")} do
-        local field, value = parseField(chunk:split("=", 2))
-        if field and value then data[field] = value end
-    end
+	-- convert the message to a table of instructions
+	local data = {}
+	for i, chunk in ipairs({ strsplit(";", addonMessage) }) do
+		local field, value = parseField(strsplit("=", chunk, 2))
+		if field and value then
+			data[field] = value
+		end
+	end
 
-    for k, v in pairs(data) do print(k, v) end
+	if data.chat then
+		ns.actions:ChatMessage(data.chat.message, data.chat.channel, data.chat.target)
+	end
 
-    -- ns.addon:ProcessMessageData(data)
+	if data.emote then
+		ns.actions:EmoteMessage(data.emote)
+	end
+
+	if data.sound then
+		ns.actions:SoundFile(data.sound)
+	end
+
+	if data.glow then
+		for _, name in ipairs(data.glow) do
+			ns.actions:FrameGlow(name, data.duration or 5)
+		end
+	end
+
+	for i = 1, 3 do
+		if data["message" .. i] then
+			ns.actions:BannerMessage(i, data["message" .. i], data.duration or 5)
+		end
+	end
 end
+
+local VALID_CHANNELS = { "PARTY", "RAID", "WHISPER" }
 
 --[[ isValidMessage
 
@@ -95,13 +135,12 @@ Only allow messages from the PARTY, RAID and WHISPER channels, and only if they
 originate from the current group leader. All other messages are assumed to be
 malicious and ignored.
 
-]] --
-
+]]
 local function isValidMessage(channel, sender)
-    local sender, _ = sender:split("-")
-    local fromSelf = sender == UnitName("player") -- for testing
-    return (channel == "PARTY" or channel == "RAID" or channel == "WHISPER") and
-               (fromSelf or UnitIsGroupLeader(sender))
+	local name, _ = strsplit("-", sender)
+	local fromSelf = name == UnitName("player") -- for testing
+	local validChannel = ns.Contains(VALID_CHANNELS, channel)
+	return validChannel and (fromSelf or UnitIsGroupLeader(sender))
 end
 
 -- Addon message prefixes
@@ -111,7 +150,7 @@ local MESSAGE_PREFIX = "TMDM_ECWAv1"
 C_ChatInfo.RegisterAddonMessagePrefix(MESSAGE_PREFIX)
 
 ns.prefixes[MESSAGE_PREFIX] = function(message, channel, sender)
-    if isValidMessage(channel, sender) then return processMessage(message) end
+	if isValidMessage(channel, sender) then
+		return processMessage(message)
+	end
 end
-
--- /script C_ChatInfo.SendAddonMessage("TMDM_ECWAv1", "m=test;s=moan", "WHISPER", "Zarillion")

@@ -1,0 +1,14 @@
+## Interface: 110007
+## Title: TMDM: Encounter Client
+## Version: 2.0
+## Notes: Tired of WAs giving inconsistent assignments yet?
+## SavedVariables: TMDM_EC_DB
+
+embeds.xml
+Util.lua
+Main.lua
+Actions.lua
+AddonMessageV1.lua
+# AddonMessageV2.lua
+VersionCheck.lua
+frames.xml
