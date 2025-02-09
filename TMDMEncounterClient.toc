@@ -3,6 +3,7 @@
 ## Version: 2.0
 ## Notes: Tired of WAs giving inconsistent assignments yet?
 ## SavedVariables: TMDM_EC_DB
+## X-Curse-Project-ID: 1196605
 
 embeds.xml
 Core/Util.lua
