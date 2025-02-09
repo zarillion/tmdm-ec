@@ -64,16 +64,19 @@ end
 -------------------------------------------------------------------------------
 
 local TEST_MESSAGE = {
-	"m={rt5} THIS IS A TEST {rt8}",
+	"m1={rt1} TEST LINE 1 {rt4}",
+	"m2={rt2} TEST LINE 2 {rt5}",
+	"m3={rt3} TEST LINE 3 {rt6}",
 	"s=569593", -- level up sound
 	"c=YELL {rt1} TEST {rt2}!",
 	"e=This is a test emote.",
+	"g=",
 }
 
 local function SendTestMessage(target)
 	target = target or UnitName("target")
 	if target and UnitIsFriend("player", "target") then
-		TEST_MESSAGE[5] = "g=" .. target
+		TEST_MESSAGE[#TEST_MESSAGE] = "g=" .. target
 
 		local message = strjoin(";", unpack(TEST_MESSAGE))
 		C_ChatInfo.SendAddonMessage("TMDM_ECWAv1", message, "WHISPER", target)

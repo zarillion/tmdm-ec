@@ -1,5 +1,5 @@
 ## Interface: 110007
-## Title: TMDM: Encounter Client
+## Title: TMDM Encounter Client
 ## Version: 2.0
 ## Notes: Tired of WAs giving inconsistent assignments yet?
 ## SavedVariables: TMDM_EC_DB

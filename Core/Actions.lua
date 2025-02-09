@@ -133,7 +133,6 @@ local function IsMessageDisplayed()
 end
 
 function ns.actions:BannerMessage(index, message, duration)
-	index = math.random(1, 3)
 	local frame = _G["TMDM_Message" .. index]
 	if frame then
 		frame:SetText(RenderMessage(message))

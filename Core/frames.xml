@@ -4,7 +4,7 @@
                         https://raw.githubusercontent.com/Gethe/wow-ui-source/live/Interface/AddOns/Blizzard_SharedXML/UI.xsd">
 
   <FontString name="TMDM_MessageFont" virtual="true" font="Fonts\FRIZQT__.TTF" outline="NORMAL" justifyH="CENTER">
-    <FontHeight val="72"/>
+    <FontHeight val="60"/>
     <Shadow>
       <Offset x="1" y="-1" />
       <Color r="0" g="0" b="0"/>
@@ -12,9 +12,9 @@
   </FontString>
 
   <Frame name="TMDM_MessageFrame" parent="UIParent" clampedToScreen="true" hidden="true">
-    <Size x="950" y="216" />
+    <Size x="800" y="180" />
     <Anchors>
-      <Anchor point="CENTER" y="400" />
+      <Anchor point="TOP" y="-100" />
     </Anchors>
     <Layers>
       <Layer level="OVERLAY">

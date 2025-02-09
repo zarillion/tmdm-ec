@@ -8,6 +8,9 @@
   "[xml]": {
     "editor.tabSize": 2
   },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "lua.preferLuaCheckErrors": true,
   "lua.targetVersion": "5.1",
   "Lua.runtime.version": "Lua 5.1",
