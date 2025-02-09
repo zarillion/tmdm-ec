@@ -25,8 +25,13 @@ actions the encounter client should take. Each pair is separated by a semicolon.
     field=value;field=value;field=value
 
 The **entire message** must fit in a single call to
-`C_ChatInfo.SendAddonMessage()`, therefore it cannot exceed 255 characters. The
-available fields are:
+`C_ChatInfo.SendAddonMessage()`, therefore it cannot exceed 255 characters.
+
+```
+/script C_ChatInfo.SendAddonMessage("TMDM_ECWAv1", "m=TEST", "WHISPER", UnitName("player"))
+```
+
+### Fields
 
 | Field | Action                                        | Example                           |
 | ----- | --------------------------------------------- | --------------------------------- |
