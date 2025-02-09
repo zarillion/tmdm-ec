@@ -40,7 +40,7 @@ luac.out
 *.hex
 
 # Bundled Libraries
-Lib/
+Libs*/
 
-# Reference files
-weakaura/
+# Release / packaging directory
+.release/

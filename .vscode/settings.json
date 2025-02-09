@@ -33,7 +33,10 @@
     "AnimateTexCoords",
     "SecureButton_GetUnit",
     "TMDM_MessageFrame",
-    "message"
+    "message",
+    "YELL",
+    "SlashCmdList",
+    "hash_SlashCmdList"
   ],
   "Lua.workspace.ignoreDir": [
     ".vscode",

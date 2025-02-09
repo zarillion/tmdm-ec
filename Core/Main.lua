@@ -9,7 +9,7 @@ ns.addon.version = C_AddOns.GetAddOnMetadata(ADDON_NAME, "version")
 
 ns.prefixes = {}
 
-ns.addon:RegisterEvent("CHAT_MSG_ADDON", function(event, prefix, message, channel, sender)
+ns.addon:RegisterEvent("CHAT_MSG_ADDON", function(_, prefix, message, channel, sender)
 	local callback = ns.prefixes[prefix]
 	if callback then
 		callback(message, channel, sender)

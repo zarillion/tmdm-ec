@@ -1,0 +1,38 @@
+externals:
+  Libs/LibStub: https://repos.curseforge.com/wow/libstub/trunk
+  Libs/CallbackHandler-1.0: https://repos.wowace.com/wow/callbackhandler/trunk/CallbackHandler-1.0
+  Libs/AceAddon-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceAddon-3.0
+  Libs/AceConsole-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceConsole-3.0
+  Libs/AceEvent-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceEvent-3.0
+  Libs/LibCustomGlow-1.0: https://github.com/Stanzilla/LibCustomGlow
+  Libs/LibGetFrame-1.0: https://github.com/mrbuds/LibGetFrame
+  Libs/LibSharedMedia-3.0: https://repos.curseforge.com/wow/libsharedmedia-3-0/trunk/LibSharedMedia-3.0
+
+manual-changelog:
+  filename: CHANGELOG.md
+  markup-type: markdown
+
+move-folders:
+  Core: Core
+
+ignore:
+  - Libs/AceAddon-3.0/AceAddon-3.0.xml
+  - Libs/AceConsole-3.0/AceConsole-3.0.xml
+  - Libs/AceEvent-3.0/AceEvent-3.0.xml
+  - Libs/CallbackHandler-1.0/CallbackHandler-1.0.xml
+  - Libs/CallbackHandler-1.0/CallbackHandler-1.0.xml
+  - Libs/LibCustomGlow-1.0/cspell.json
+  - Libs/LibCustomGlow-1.0/LibCustomGlow-1.0.toc
+  - Libs/LibCustomGlow-1.0/LibCustomGlow-1.0.xml
+  - Libs/LibCustomGlow-1.0/LICENSE
+  - Libs/LibCustomGlow-1.0/README.md
+  - Libs/LibGetFrame-1.0/CallbackHandler-1.0
+  - Libs/LibGetFrame-1.0/LibGetFrame-1.0.toc
+  - Libs/LibGetFrame-1.0/LibGetFrame-1.0.xml
+  - Libs/LibGetFrame-1.0/LibStub
+  - Libs/LibGetFrame-1.0/LICENCE.txt
+  - Libs/LibGetFrame-1.0/README.md
+  - Libs/LibGetFrame-1.0/stylua.toml
+  - Libs/LibSharedMedia-3.0/lib.xml
+  - Libs/LibStub/LibStub.toc
+  - Libs/LibStub/tests

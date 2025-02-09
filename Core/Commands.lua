@@ -4,6 +4,8 @@
 
 local ADDON_NAME, ns = ...
 
+-------------------------------------------------------------------------------
+
 -- Addon message prefixes
 local MESSAGE_PREFIX = "TMDM_ECWAvc"
 
@@ -12,7 +14,7 @@ C_ChatInfo.RegisterAddonMessagePrefix(MESSAGE_PREFIX)
 
 local VERSIONS = {}
 
-ns.addon:RegisterChatCommand("tmdmvc", function()
+local function RunVersionCheck()
 	print("Running TMDM ECWA version check (v" .. ns.addon.version .. ")...")
 	table.wipe(VERSIONS)
 
@@ -49,7 +51,7 @@ ns.addon:RegisterChatCommand("tmdmvc", function()
 			print("Missing: " .. strjoin(", ", unpack(missing)))
 		end
 	end)
-end)
+end
 
 ns.prefixes[MESSAGE_PREFIX] = function(message, _, sender)
 	if message == "request" then
@@ -58,3 +60,38 @@ ns.prefixes[MESSAGE_PREFIX] = function(message, _, sender)
 		VERSIONS[sender] = message
 	end
 end
+
+-------------------------------------------------------------------------------
+
+local TEST_MESSAGE = {
+	"m={rt5} THIS IS A TEST {rt8}",
+	"s=569593", -- level up sound
+	"c=YELL {rt1} TEST {rt2}!",
+	"e=This is a test emote.",
+}
+
+local function SendTestMessage(target)
+	target = target or UnitName("target")
+	if target and UnitIsFriend("player", "target") then
+		TEST_MESSAGE[5] = "g=" .. target
+
+		local message = strjoin(";", unpack(TEST_MESSAGE))
+		C_ChatInfo.SendAddonMessage("TMDM_ECWAv1", message, "WHISPER", target)
+	end
+end
+
+-------------------------------------------------------------------------------
+
+ns.addon:RegisterChatCommand("tmdm", function(command, ...)
+	if command == "test" then
+		SendTestMessage(unpack(...))
+	elseif command == "vc" then
+		RunVersionCheck()
+	else
+		print("TMDM Encounter Client:")
+		print(" ")
+		print("    /tmdm test [player] - Send a test message to a player or your current target.")
+		print("    /tmdm vc - Run a version check for all raid members.")
+		print(" ")
+	end
+end)

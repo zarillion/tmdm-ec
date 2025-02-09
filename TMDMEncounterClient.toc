@@ -5,10 +5,10 @@
 ## SavedVariables: TMDM_EC_DB
 
 embeds.xml
-Util.lua
-Main.lua
-Actions.lua
-AddonMessageV1.lua
-# AddonMessageV2.lua
-VersionCheck.lua
-frames.xml
+Core/Util.lua
+Core/Main.lua
+Core/Actions.lua
+Core/Commands.lua
+Core/AddonMessageV1.lua
+# Core/AddonMessageV2.lua
+Core/frames.xml
