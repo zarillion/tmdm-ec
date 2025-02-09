@@ -14,16 +14,29 @@ C_ChatInfo.RegisterAddonMessagePrefix(MESSAGE_PREFIX)
 
 local VERSIONS = {}
 
+local function RequestVersion(unit)
+	local name = ns.GetFullUnitName(unit)
+	if name then
+		VERSIONS[name] = 0
+		C_ChatInfo.SendAddonMessage("TMDM_ECWAvc", "request", "WHISPER", name)
+	end
+end
+
 local function RunVersionCheck()
 	print("Running TMDM ECWA version check (v" .. ns.addon.version .. ")...")
 	table.wipe(VERSIONS)
 
-	for i = 1, 40 do
-		local name = ns.GetFullUnitName("raid" .. i)
-		if name then
-			VERSIONS[name] = 0
-			C_ChatInfo.SendAddonMessage("TMDM_ECWAvc", "request", "WHISPER", name)
+	if IsInRaid() then
+		for i = 1, 40 do
+			RequestVersion("raid" .. i)
 		end
+	elseif IsInGroup() then
+		for i = 1, 4 do
+			RequestVersion("party" .. i)
+		end
+	else
+		-- Not in a group, just sent to ourselves =)
+		RequestVersion("player")
 	end
 
 	C_Timer.After(2, function()
@@ -74,8 +87,8 @@ local TEST_MESSAGE = {
 }
 
 local function SendTestMessage(target)
-	target = target or UnitName("target")
-	if target and UnitIsFriend("player", "target") then
+	target = target or UnitName("target") or UnitName("player")
+	if target and UnitIsFriend("player", target) then
 		TEST_MESSAGE[#TEST_MESSAGE] = "g=" .. target
 
 		local message = strjoin(";", unpack(TEST_MESSAGE))
@@ -85,9 +98,11 @@ end
 
 -------------------------------------------------------------------------------
 
-ns.addon:RegisterChatCommand("tmdm", function(command, ...)
+ns.addon:RegisterChatCommand("tmdm", function(string)
+	local args = { strsplit(" ", string) }
+	local command = table.remove(args, 1)
 	if command == "test" then
-		SendTestMessage(unpack(...))
+		SendTestMessage(unpack(args))
 	elseif command == "vc" then
 		RunVersionCheck()
 	else
