@@ -3,7 +3,7 @@
 The TMDM Encounter Client allows a raid leader to send display information and
 trigger sounds across the raid group.
 
-# Usage
+## Usage
 
 To use this client, make simple weakauras (or your own addons) that construct
 and send addon messages to your party or raid members. The client will parse
@@ -17,7 +17,7 @@ Advantages of this approach:
 - Unique boss assignment auras do not need to be downloaded and kept in sync for
   every member of your raid.
 
-# V1 Format
+## V1 Format
 
 The `v1` addon message format allows simple `field=value` pairs to define
 actions the encounter client should take. Each pair is separated by a semicolon.
@@ -37,7 +37,7 @@ available fields are:
 | `m`   | Disply a large message (also `m1`,`m2`,`m3`)  | `m={skull} SOAK MECHANIC {skull}` |
 | `s`   | Play a sound (FileDataID, sound name or path) | `s=moan`, `s=569593`              |
 
-## Examples
+### Examples
 
 - `m=GO IN THE CAGE; d=10`
 - `s=airhorn`
@@ -46,7 +46,7 @@ available fields are:
 - `m=|cff00ff00COLOR TEST|r MESSAGE`
 - `c=WHISPER Player1 Hey bud, gimme dat external`
 
-## Remember
+### Remember
 
 - Only messages sent by the party or raid leader will be processed.
   - Use `RAID` to send commands to the entire raid at once.
@@ -60,7 +60,7 @@ available fields are:
   assign text to the middle line (`m2`).
 - The `m=` and `c=` fields both support `{circle}` and `{rt1}` for markers.
 
-# V2 Format
+## V2 Format
 
 Future plans for a V2 format:
 
