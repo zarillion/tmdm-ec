@@ -140,7 +140,7 @@ local function isValidMessage(channel, sender)
 	local name, _ = strsplit("-", sender)
 	local fromSelf = name == UnitName("player") -- for testing
 	local validChannel = ns.Contains(VALID_CHANNELS, channel)
-	return validChannel and (fromSelf or UnitIsGroupLeader(sender))
+	return validChannel and (fromSelf or UnitIsGroupLeader(name))
 end
 
 -- Addon message prefixes
