@@ -1,6 +1,6 @@
 ## Interface: 110007
 ## Title: TMDM Encounter Client
-## Version: 2.0
+## Version: 2.1
 ## Notes: Tired of WAs giving inconsistent assignments yet?
 ## SavedVariables: TMDM_EC_DB
 ## X-Curse-Project-ID: 1196605
