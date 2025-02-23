@@ -7,18 +7,19 @@ local ADDON_NAME, ns = ...
 -------------------------------------------------------------------------------
 
 -- Addon message prefixes
-local MESSAGE_PREFIX = "TMDM_ECWAvc"
+local VERSION_PREFIX = "TMDM_ECWAvc"
 
 -- Register the user's client to send/receive our addon messages
-C_ChatInfo.RegisterAddonMessagePrefix(MESSAGE_PREFIX)
+C_ChatInfo.RegisterAddonMessagePrefix(VERSION_PREFIX)
+
+local Send = C_ChatInfo.SendAddonMessage
 
 local VERSIONS = {}
 
-local function RequestVersion(unit)
-	local name = ns.GetFullUnitName(unit)
-	if name then
-		VERSIONS[name] = 0
-		C_ChatInfo.SendAddonMessage("TMDM_ECWAvc", "request", "WHISPER", name)
+local function InitializeVersion(unit)
+	local player = ns.GetFullUnitName(unit)
+	if player then
+		VERSIONS[player] = 0
 	end
 end
 
@@ -28,18 +29,20 @@ local function RunVersionCheck()
 
 	if IsInRaid() then
 		for i = 1, 40 do
-			RequestVersion("raid" .. i)
+			InitializeVersion("raid" .. i)
 		end
+		Send(VERSION_PREFIX, "request", "RAID")
 	elseif IsInGroup() then
 		for i = 1, 4 do
-			RequestVersion("party" .. i)
+			InitializeVersion("party" .. i)
 		end
+		Send(VERSION_PREFIX, "request", "PARTY")
 	else
 		-- Not in a group, just sent to ourselves =)
-		RequestVersion("player")
+		Send(VERSION_PREFIX, "request", "WHISPER", UnitName("player"))
 	end
 
-	C_Timer.After(2, function()
+	C_Timer.After(3, function()
 		local current = {}
 		local outdated = {}
 		local missing = {}
@@ -66,9 +69,9 @@ local function RunVersionCheck()
 	end)
 end
 
-ns.prefixes[MESSAGE_PREFIX] = function(message, _, sender)
+ns.prefixes[VERSION_PREFIX] = function(message, _, sender)
 	if message == "request" then
-		C_ChatInfo.SendAddonMessage(MESSAGE_PREFIX, ns.addon.version, "WHISPER", sender)
+		Send(VERSION_PREFIX, ns.addon.version, "WHISPER", sender)
 	else
 		VERSIONS[sender] = message
 	end
@@ -92,24 +95,27 @@ local function SendTestMessage(target)
 		TEST_MESSAGE[#TEST_MESSAGE] = "g=" .. target
 
 		local message = strjoin(";", unpack(TEST_MESSAGE))
-		C_ChatInfo.SendAddonMessage("TMDM_ECWAv1", message, "WHISPER", target)
+		Send("TMDM_ECWAv1", message, "WHISPER", target)
 	end
 end
 
 -------------------------------------------------------------------------------
 
+local ICON = "|TInterface\\Addons\\TMDMEncounterClient\\Resources\\Textures\\tmdm.png:0|t"
+
 ns.addon:RegisterChatCommand("tmdm", function(string)
 	local args = { strsplit(" ", string) }
 	local command = table.remove(args, 1)
+
 	if command == "test" then
 		SendTestMessage(unpack(args))
 	elseif command == "vc" then
 		RunVersionCheck()
 	else
-		print("TMDM Encounter Client:")
+		print(ICON .. " TMDM Encounter Client:")
 		print(" ")
-		print("    /tmdm test [player] - Send a test message to a player or your current target.")
-		print("    /tmdm vc - Run a version check for all raid members.")
+		print("    /tmdm test [player] - Send a test message.")
+		print("    /tmdm vc - Run a version check for all group members.")
 		print(" ")
 	end
 end)
