@@ -35,6 +35,7 @@ The **entire message** must fit in a single call to
 
 | Field | Action                                        | Example                           |
 | ----- | --------------------------------------------- | --------------------------------- |
+| `b`   | Track a unit resource as a special bar.       | `b=boss1:3:10`                    |
 | `c`   | Trigger a SAY, YELL, RAID or WHISPER message. | `c=SAY Something is on me...`     |
 | `d`   | Duration for glows & messages (default: 5s)   | `d=10`, `d=6.5`                   |
 | `e`   | Add an emote to the default chat frame        | `e=I messed up!`                  |
@@ -67,7 +68,7 @@ The **entire message** must fit in a single call to
 
 ## V2 Format
 
-Future plans for a V2 format:
+Future plans for a `v2` format:
 
 - Add support for messages beyond 255 characters.
 - Add destination players to messages, allowing a single RAID message to be
