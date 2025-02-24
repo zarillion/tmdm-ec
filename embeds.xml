@@ -9,4 +9,4 @@
   <Script file="Libs\LibSharedMedia-3.0\LibSharedMedia-3.0.lua"/>
 </Ui>
 
-<!-- AceComm, AceSerializer, LibCompress, LibDeflate, LibSerialize -->
+<!-- AceComm, AceSerializer, LibCompress, LibDeflate -->

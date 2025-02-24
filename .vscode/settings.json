@@ -31,15 +31,7 @@
   "Lua.diagnostics.globals": [
     "ChatTypeInfo",
     "DEFAULT_CHAT_FRAME",
-    "CreateTexturePool",
-    "CreateFramePool",
-    "AnimateTexCoords",
-    "SecureButton_GetUnit",
-    "TMDM_MessageFrame",
-    "message",
-    "YELL",
-    "SlashCmdList",
-    "hash_SlashCmdList"
+    "AbbreviateLargeNumbers"
   ],
   "Lua.workspace.ignoreDir": [
     ".vscode",

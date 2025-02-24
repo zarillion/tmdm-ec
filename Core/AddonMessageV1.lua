@@ -7,6 +7,7 @@ actions the encounter client should take. Each pair is separated by a semicolon.
 
 The available fields are (all optional):
 
+    b   Track a unit resource on the special bar
     c   The chat message to emit
     d   The display duration (default 5s)
     e   An emote to put in the chat frame
@@ -35,38 +36,48 @@ Caveats:
 
 local ADDON_NAME, ns = ...
 
-local function tochat(value)
-	-- value == "CHANNEL [TARGET] MESSAGE"; TARGET only set for WHISPER channel
-	local channel, message = strsplit(" ", value, 2)
-	local target = nil
+local function tospecialbar(value)
+    -- value == "UNIT:RESOURCE[:TIMER]"
+    if value == "" then
+        return { timer = 0 }
+    end
+    local unit, resource, timer = strsplit(":", value)
+    return { unit = unit, resource = tonumber(resource), timer = tonumber(timer) }
+end
 
-	if #channel > 0 and #message > 0 then
-		if channel == "WHISPER" then
-			target, message = strsplit(" ", message, 2)
-		end
-		return { channel = channel, message = message, target = target }
-	end
+local function tochat(value)
+    -- value == "CHANNEL [TARGET] MESSAGE"; TARGET only set for WHISPER channel
+    local channel, message = strsplit(" ", value, 2)
+    local target = nil
+
+    if #channel > 0 and #message > 0 then
+        if channel == "WHISPER" then
+            target, message = strsplit(" ", message, 2)
+        end
+        return { channel = channel, message = message, target = target }
+    end
 end
 
 local function toplayerlist(value)
-	-- value == PlayerName1,PlayerName2,PlayerName3
-	local players = {}
-	for i, name in ipairs({ strsplit(",", value) }) do
-		players[#players + 1] = strtrim(name)
-	end
-	return players
+    -- value == PlayerName1,PlayerName2,PlayerName3
+    local players = {}
+    for i, name in ipairs({ strsplit(",", value) }) do
+        players[#players + 1] = strtrim(name)
+    end
+    return players
 end
 
 local addonMessageFields = {
-	c = { "chat", tochat },
-	d = { "duration", tonumber },
-	e = { "emote", tostring },
-	g = { "glow", toplayerlist },
-	m = { "message2", tostring },
-	m1 = { "message1", tostring },
-	m2 = { "message2", tostring },
-	m3 = { "message3", tostring },
-	s = { "sound", tostring },
+    b = { "bar", tospecialbar },
+    c = { "chat", tochat },
+    d = { "duration", tonumber },
+    e = { "emote", tostring },
+    g = { "glow", toplayerlist },
+    m = { "message2", tostring },
+    m1 = { "message1", tostring },
+    m2 = { "message2", tostring },
+    m3 = { "message3", tostring },
+    s = { "sound", tostring },
 }
 
 --[[ parseField
@@ -77,11 +88,11 @@ function.
 
 ]]
 local function parseField(field, value)
-	local name, cast = unpack(addonMessageFields[field] or {})
-	if name then
-		return name, (cast or tostring)(value)
-	end
-	print(('TMDM-EC ERROR: unknown field "%s"'):format(field))
+    local name, cast = unpack(addonMessageFields[field] or {})
+    if name then
+        return name, (cast or tostring)(value)
+    end
+    print(('TMDM-EC ERROR: unknown field "%s"'):format(field))
 end
 
 --[[ processMessage
@@ -91,40 +102,44 @@ each of them. Ignore instruction types that are unrecognized.
 
 ]]
 local function processMessage(addonMessage)
-	-- print("Parsing:", addonMessage, ("(length=%d)"):format(#addonMessage))
+    -- print("Parsing:", addonMessage, ("(length=%d)"):format(#addonMessage))
 
-	-- convert the message to a table of instructions
-	local data = {}
-	for i, chunk in ipairs({ strsplit(";", addonMessage) }) do
-		local field, value = parseField(strsplit("=", chunk, 2))
-		if field and value then
-			data[field] = value
-		end
-	end
+    -- convert the message to a table of instructions
+    local data = {}
+    for i, chunk in ipairs({ strsplit(";", addonMessage) }) do
+        local field, value = parseField(strsplit("=", chunk, 2))
+        if field and value then
+            data[field] = value
+        end
+    end
 
-	if data.chat then
-		ns.actions:ChatMessage(data.chat.message, data.chat.channel, data.chat.target)
-	end
+    if data.chat then
+        ns.actions:ChatMessage(data.chat.message, data.chat.channel, data.chat.target)
+    end
 
-	if data.emote then
-		ns.actions:EmoteMessage(data.emote)
-	end
+    if data.emote then
+        ns.actions:EmoteMessage(data.emote)
+    end
 
-	if data.sound then
-		ns.actions:SoundFile(data.sound)
-	end
+    if data.sound then
+        ns.actions:SoundFile(data.sound)
+    end
 
-	if data.glow then
-		for _, name in ipairs(data.glow) do
-			ns.actions:FrameGlow(name, data.duration or 5)
-		end
-	end
+    if data.glow then
+        for _, name in ipairs(data.glow) do
+            ns.actions:FrameGlow(name, data.duration or 5)
+        end
+    end
 
-	for i = 1, 3 do
-		if data["message" .. i] then
-			ns.actions:BannerMessage(i, data["message" .. i], data.duration or 5)
-		end
-	end
+    if data.bar then
+        ns.actions:SpecialBar(data.bar.unit, data.bar.resource, data.bar.timer)
+    end
+
+    for i = 1, 3 do
+        if data["message" .. i] then
+            ns.actions:BannerMessage(i, data["message" .. i], data.duration or 5)
+        end
+    end
 end
 
 local VALID_CHANNELS = { "PARTY", "RAID", "WHISPER" }
@@ -137,10 +152,10 @@ malicious and ignored.
 
 ]]
 local function isValidMessage(channel, sender)
-	local name, _ = strsplit("-", sender)
-	local fromSelf = name == UnitName("player") -- for testing
-	local validChannel = ns.Contains(VALID_CHANNELS, channel)
-	return validChannel and (fromSelf or UnitIsGroupLeader(name))
+    local name, _ = strsplit("-", sender)
+    local fromSelf = name == UnitName("player") -- for testing
+    local validChannel = ns.Contains(VALID_CHANNELS, channel)
+    return validChannel and (fromSelf or UnitIsGroupLeader(name))
 end
 
 -- Addon message prefixes
@@ -150,7 +165,7 @@ local MESSAGE_PREFIX = "TMDM_ECWAv1"
 C_ChatInfo.RegisterAddonMessagePrefix(MESSAGE_PREFIX)
 
 ns.prefixes[MESSAGE_PREFIX] = function(message, channel, sender)
-	if isValidMessage(channel, sender) then
-		return processMessage(message)
-	end
+    if isValidMessage(channel, sender) then
+        return processMessage(message)
+    end
 end

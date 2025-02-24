@@ -4,23 +4,23 @@ redefined = false
 unused_args = false
 
 read_globals = {
-	-- LUA / helper functions
-	"strtrim",
+    -- LUA / helper functions
+    "strtrim",
 
-	-- WoW API functions
-	"GetAddOnMetadata",
-	"UnitName",
-	"UnitIsGroupLeader",
+    -- WoW API functions
+    "GetAddOnMetadata",
+    "UnitName",
+    "UnitIsGroupLeader",
 
-	-- WoW Widget Functions
+    -- WoW Widget Functions
 
-	-- WoW UI Frames & Mixins
+    -- WoW UI Frames & Mixins
 
-	-- WoW Global variables
-	"C_ChatInfo",
+    -- WoW Global variables
+    "C_ChatInfo",
 
-	-- Third-Party libraries/addons
-	"LibStub",
+    -- Third-Party libraries/addons
+    "LibStub",
 }
 
 globals = {}
