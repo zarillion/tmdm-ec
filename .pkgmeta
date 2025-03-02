@@ -33,3 +33,4 @@ ignore:
   - Libs/LibSharedMedia-3.0/lib.xml
   - Libs/LibStub/LibStub.toc
   - Libs/LibStub/tests
+  - shapes.psd
