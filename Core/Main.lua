@@ -20,6 +20,7 @@ ns.addon:RegisterEvent("ENCOUNTER_END", function()
     -- Hide all displays when an encounter ends
     _G["TMDM_MessageFrame"]:Stop()
     _G["TMDM_SpecialBar"]:Stop()
+    _G["TMDM_DiagramFrame"]:Stop()
 end)
 
 _G.TMDM = ns

@@ -85,6 +85,27 @@ local TEST_MESSAGE = {
     "c=YELL {rt1} TEST {rt2}!",
     "e=This is a test emote.",
     "b=player:1:5",
+    "z=" .. strjoin(
+        ",",
+        unpack({
+            -- top row
+            "t:-75:50",
+            "s:-25:50",
+            "m:25:50",
+            "d:75:50",
+
+            -- middle row
+            "c:-50::0:0.7:0",
+            "g",
+            "x:50::0.7:0:0",
+
+            -- bottom row
+            "p:-75:-50",
+            "h:-25:-50",
+            "y:25:-50",
+            "o:75:-50",
+        })
+    ),
     "g=",
 }
 
@@ -94,13 +115,14 @@ local function SendTestMessage(target)
         TEST_MESSAGE[#TEST_MESSAGE] = "g=" .. target
 
         local message = strjoin(";", unpack(TEST_MESSAGE))
+        print("Sending test message to " .. target .. " (length=" .. #message .. ")")
         Send("TMDM_ECWAv1", message, "WHISPER", target)
     end
 end
 
 -------------------------------------------------------------------------------
 
-local ICON = "|TInterface\\Addons\\TMDMEncounterClient\\Resources\\Textures\\tmdm.png:0|t"
+local ICON = "|TInterface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\tmdm.png:0|t"
 
 ns.addon:RegisterChatCommand("tmdm", function(string)
     local args = { strsplit(" ", string) }

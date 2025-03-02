@@ -137,3 +137,29 @@ function ns.actions:SpecialBar(unit, resource, timer)
         frame:Init(unit, resource, timer)
     end
 end
+
+-------------------------------------------------------------------------------
+
+local SHAPES = {
+    c = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\circle.png",
+    x = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\cross.png",
+    d = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\diamond.png",
+    y = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\heptagon.png",
+    h = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\hexagon.png",
+    m = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\moon.png",
+    o = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\octogon.png",
+    p = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\pentagon.png",
+    s = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\star.png",
+    t = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\triangle.png",
+    g = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\tmdm.png",
+    -- q = square
+    -- l = line
+}
+
+function ns.actions:Diagram(lines, shapes, duration)
+    for _, shape in ipairs(shapes) do
+        shape.texture = SHAPES[shape.type]
+    end
+    local frame = _G["TMDM_DiagramFrame"]
+    frame:Display(lines, shapes, duration)
+end

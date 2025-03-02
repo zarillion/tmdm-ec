@@ -14,6 +14,8 @@ The available fields are (all optional):
     g   Glow player unit frames
     m   The aura message to be displayed (also m1,m2,m3)
     s   The sound to play
+    l   Draw one or more lines
+    z   Draw one or more shapes
 
 Some examples:
 
@@ -28,7 +30,7 @@ Caveats:
 
   * All messages received are assumed to be for us. This means the WHISPER channel must
     be used to direct individuals, which does not work cross-realm.
-  * The message is limited to 250 characters as no serializer/compression or comms API
+  * The message is limited to 255 characters as no serializer/compression or comms API
     is used to split the messages.
   * Duration is applied to both the glow and display if sent in the same message.
 
@@ -67,6 +69,56 @@ local function toplayerlist(value)
     return players
 end
 
+local function tolines(value)
+    -- value == "line,line,line,..."
+    -- line == "x:y:x:y[:thickness:r:g:b:a]"
+    local lines = {}
+    for i, line in ipairs({ strsplit(",", value) }) do
+        local x1, y1, x2, y2, thickness, r, g, b, a = strsplit(":", line)
+        lines[i] = {
+            position = {
+                x1 = tonumber(x1),
+                y1 = tonumber(y1),
+                x2 = tonumber(x2),
+                y2 = tonumber(y2),
+            },
+            color = {
+                r = tonumber(r) or 1,
+                g = tonumber(g) or 1,
+                b = tonumber(b) or 1,
+                a = tonumber(a) or 1,
+            },
+            thickness = tonumber(thickness) or 4,
+        }
+    end
+    return lines
+end
+
+local function toshapes(value)
+    -- value == "shape,shape,shape,..."
+    -- shape == "type[:x:y:r:g:b:a:scale:angle]"
+    local shapes = {}
+    for i, shape in ipairs({ strsplit(",", value) }) do
+        local type, x, y, r, g, b, a, scale, angle = strsplit(":", shape)
+        shapes[i] = {
+            type = type,
+            position = {
+                x = tonumber(x) or 0,
+                y = tonumber(y) or 0,
+            },
+            color = {
+                r = tonumber(r) or 1,
+                g = tonumber(g) or 1,
+                b = tonumber(b) or 1,
+                a = tonumber(a) or 1,
+            },
+            scale = tonumber(scale) or 1,
+            angle = tonumber(angle) or 0,
+        }
+    end
+    return shapes
+end
+
 local addonMessageFields = {
     b = { "bar", tospecialbar },
     c = { "chat", tochat },
@@ -78,6 +130,8 @@ local addonMessageFields = {
     m2 = { "message2", tostring },
     m3 = { "message3", tostring },
     s = { "sound", tostring },
+    l = { "lines", tolines },
+    z = { "shapes", toshapes },
 }
 
 --[[ parseField
@@ -133,6 +187,10 @@ local function processMessage(addonMessage)
 
     if data.bar then
         ns.actions:SpecialBar(data.bar.unit, data.bar.resource, data.bar.timer)
+    end
+
+    if data.lines or data.shapes then
+        ns.actions:Diagram(data.lines, data.shapes, data.duration or 5)
     end
 
     for i = 1, 3 do

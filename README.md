@@ -17,6 +17,11 @@ Advantages of this approach:
 - Unique boss assignment auras do not need to be downloaded and kept in sync for
   every member of your raid.
 
+See
+[this wiki page](https://wiki.tmdmguild.com/books/guild-raid-information/page/tmdm-encounter-client)
+for an in-depth explanation of how we use this client to minimize aura-related
+progression wipes.
+
 ## V1 Format
 
 The `v1` addon message format allows simple `field=value` pairs to define
@@ -42,8 +47,10 @@ The **entire message** must fit in a single call to
 | `g`   | Glow multiple player unit frames              | `g=player1,player2,player3`       |
 | `m`   | Disply a large message (also `m1`,`m2`,`m3`)  | `m={skull} SOAK MECHANIC {skull}` |
 | `s`   | Play a sound (FileDataID, sound name or path) | `s=moan`, `s=569593`              |
+| `l`   | Draw one or more lines in the diagram frame.  | `l=-10:-10:10:10` (see code)      |
+| `z`   | Draw one or more shapes in the diagram frame. | `z=c:-50,x:50` (see code)         |
 
-### Examples
+### More Examples
 
 - `m=GO IN THE CAGE; d=10`
 - `s=airhorn`
@@ -68,9 +75,5 @@ The **entire message** must fit in a single call to
 
 ## V2 Format
 
-Future plans for a `v2` format:
-
-- Add support for messages beyond 255 characters.
-- Add destination players to messages, allowing a single RAID message to be
-  processed by only some of the raid.
-- Add a simple shape-drawing frame for positional assignments.
+Future plans for a `v2` format would add support for messages over 255
+characters.

@@ -1,0 +1,59 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+                        https://raw.githubusercontent.com/Gethe/wow-ui-source/live/Interface/AddOns/Blizzard_SharedXML/UI.xsd">
+  <Script file="Diagram.lua"/>
+
+  <Frame name="TMDM_DiagramFrame" mixin="TMDM_DiagramMixin" parent="UIParent"
+    clampedToScreen="true" clipChildren="true" hidden="true">
+    <Size x="256" y="256" />
+    <Anchors>
+      <Anchor point="CENTER" x="400" y="50" />
+    </Anchors>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <Texture parentKey="BG">
+          <Anchors>
+            <Anchor point="TOPLEFT"/>
+            <Anchor point="BOTTOMRIGHT"/>
+          </Anchors>
+          <Color r="0" g="0" b="0" a="0.2"/>
+        </Texture>
+      </Layer>
+      <Layer level="ARTWORK" textureSubLevel="-8">
+        <Texture parentKey="Texture01"></Texture>
+        <Line parentKey="Line01"></Line>
+        <Line parentKey="Line02"></Line>
+        <Line parentKey="Line03"></Line>
+        <Line parentKey="Line04"></Line>
+        <Line parentKey="Line05"></Line>
+        <Line parentKey="Line06"></Line>
+        <Line parentKey="Line07"></Line>
+        <Line parentKey="Line08"></Line>
+        <Line parentKey="Line09"></Line>
+        <Line parentKey="Line10"></Line>
+      </Layer>
+      <Layer level="ARTWORK" textureSubLevel="-7"><Texture parentKey="Texture02"></Texture></Layer>
+      <Layer level="ARTWORK" textureSubLevel="-6"><Texture parentKey="Texture03"></Texture></Layer>
+      <Layer level="ARTWORK" textureSubLevel="-5"><Texture parentKey="Texture04"></Texture></Layer>
+      <Layer level="ARTWORK" textureSubLevel="-4"><Texture parentKey="Texture05"></Texture></Layer>
+      <Layer level="ARTWORK" textureSubLevel="-3"><Texture parentKey="Texture06"></Texture></Layer>
+      <Layer level="ARTWORK" textureSubLevel="-2"><Texture parentKey="Texture07"></Texture></Layer>
+      <Layer level="ARTWORK" textureSubLevel="-1"><Texture parentKey="Texture08"></Texture></Layer>
+      <Layer level="ARTWORK" textureSubLevel="0"><Texture parentKey="Texture09"></Texture></Layer>
+      <Layer level="ARTWORK" textureSubLevel="1"><Texture parentKey="Texture10"></Texture></Layer>
+      <Layer level="ARTWORK" textureSubLevel="2"><Texture parentKey="Texture11"></Texture></Layer>
+      <Layer level="ARTWORK" textureSubLevel="3"><Texture parentKey="Texture12"></Texture></Layer>
+      <Layer level="ARTWORK" textureSubLevel="4"><Texture parentKey="Texture13"></Texture></Layer>
+      <Layer level="ARTWORK" textureSubLevel="5"><Texture parentKey="Texture14"></Texture></Layer>
+      <Layer level="ARTWORK" textureSubLevel="6"><Texture parentKey="Texture15"></Texture></Layer>
+      <Layer level="ARTWORK" textureSubLevel="7"><Texture parentKey="Texture16"></Texture></Layer>
+    </Layers>
+    <Frames>
+      <Frame name="$parentOverlay" inherits="TMDM_FrameOverlay"></Frame>
+    </Frames>
+    <Scripts>
+      <OnLoad method="OnLoad"/>
+    </Scripts>
+  </Frame>
+</Ui>

@@ -12,7 +12,7 @@
     </Shadow>
   </FontString>
 
-  <Frame name="TMDM_MessageFrame" mixin="TMDM_MessageMixin" parent="UIParent" clampedToScreen="true" hidden="false">
+  <Frame name="TMDM_MessageFrame" mixin="TMDM_MessageMixin" parent="UIParent" clampedToScreen="true" hidden="true">
     <Size x="800" y="180" />
     <Anchors>
       <Anchor point="TOP" y="-100" />
