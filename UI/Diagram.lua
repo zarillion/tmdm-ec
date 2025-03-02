@@ -6,6 +6,8 @@ local ADDON_NAME, ns = ...
 
 -------------------------------------------------------------------------------
 
+local TEXTURE_SIZE = 32 -- all shape textures are 32x32
+
 TMDM_DiagramMixin = {
     textures = {},
     lines = {},
@@ -16,7 +18,6 @@ function TMDM_DiagramMixin:OnLoad()
     for i = 1, 16 do
         local texture = self["Texture" .. string.format("%02d", i)]
         if texture then
-            texture:SetSize(32, 32) -- all shape textures are 32x32
             self.textures[#self.textures + 1] = texture
         end
     end
@@ -31,6 +32,7 @@ end
 
 function TMDM_DiagramMixin:Display(lines, shapes, duration)
     if self.timer then
+        self:Stop()
         self.timer:Cancel()
     end
 
@@ -61,7 +63,7 @@ function TMDM_DiagramMixin:Display(lines, shapes, duration)
             texture:ClearAllPoints()
             texture:SetPoint("CENTER", shape.position.x, shape.position.y)
             texture:SetRotation(shape.angle)
-            texture:SetScale(shape.scale)
+            texture:SetSize(TEXTURE_SIZE * shape.scale, TEXTURE_SIZE * shape.scale)
         end
     end
 
@@ -81,7 +83,8 @@ function TMDM_DiagramMixin:Stop()
         texture:SetVertexColor(1, 1, 1, 1)
     end
     for _, line in ipairs(self.lines) do
-        line:ClearAllPoints()
+        line:SetStartPoint("CENTER", 0, 0)
+        line:SetEndPoint("CENTER", 0, 0)
         line:SetThickness(4)
         line:SetVertexColor(1, 1, 1, 1)
     end
