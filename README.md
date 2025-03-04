@@ -63,7 +63,7 @@ The **entire message** must fit in a single call to
 | [`d`](#display-duration)     | Duration for glows & messages (default: 5s)    | `d=10`, `d=6.5`                   |
 | [`e`](#emote-messages)       | Add an emote to the default chat frame         | `e=I messed up!`                  |
 | [`g`](#unit-frame-glows)     | Glow multiple player unit frames               | `g=player1,player2,player3`       |
-| [`l`](#diagram-frame)        | Draw one or more lines in the diagram frame.   | `l=-10:-10:10:10`                 |
+| [`l`](#diagram-frame)        | Draw one or more lines in the diagram frame.   | `l=-50:-50:50:50`                 |
 | [`m`](#banner-messages)      | Disply a large message (also `m1`, `m2`, `m3`) | `m={skull} SOAK MECHANIC {skull}` |
 | [`s`](#sound-notifications)  | Play a sound (FileDataID, sound name or path)  | `s=moan`, `s=569593`              |
 | [`z`](#diagram-frame)        | Draw one or more shapes in the diagram frame.  | `z=c:-50,x:50`                    |
@@ -93,8 +93,7 @@ as large text at the top-center of the player's screen.
 
 ### Chat Messages
 
-Chat messages can be automatically sent using the `c` field. The format for
-sending a message is:
+Chat messages can be automatically sent using the `c` field.
 
     c=CHANNEL[:TARGET]:MESSAGE
 

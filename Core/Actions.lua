@@ -164,8 +164,10 @@ local SHAPES = {
 }
 
 function ns.actions:Diagram(lines, shapes, duration)
-    for _, shape in ipairs(shapes) do
-        shape.texture = SHAPES[shape.type]
+    if shapes then
+        for _, shape in ipairs(shapes) do
+            shape.texture = SHAPES[shape.type]
+        end
     end
     local frame = _G["TMDM_DiagramFrame"]
     frame:Display(lines, shapes, duration)
