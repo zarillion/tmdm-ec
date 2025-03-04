@@ -42,7 +42,9 @@ would be:
 The **entire message** must fit in a single call to
 `C_ChatInfo.SendAddonMessage()`, therefore it cannot exceed 255 characters.
 
-    /script C_ChatInfo.SendAddonMessage("TMDMv1", "m=TEST", "WHISPER", UnitName("player"))
+```lua
+/script C_ChatInfo.SendAddonMessage("TMDMv1", "m=TEST", "WHISPER", UnitName("player"))
+```
 
 #### Remember!
 

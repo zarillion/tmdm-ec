@@ -24,7 +24,7 @@ local function InitializeVersion(unit)
 end
 
 local function RunVersionCheck()
-    print("Running TMDM ECWA version check (v" .. ns.addon.version .. ")...")
+    print("Running TMDM:EC version check (v" .. ns.addon.version .. ")...")
     table.wipe(VERSIONS)
 
     if IsInRaid() then
@@ -53,7 +53,7 @@ local function RunVersionCheck()
             elseif version == 0 then
                 missing[#missing + 1] = ns.Colorize(name)
             else
-                outdated[#outdated + 1] = ns.Colorize(name)
+                outdated[#outdated + 1] = ns.Colorize(name) .. " (" .. version .. ")"
             end
         end
 
@@ -116,7 +116,7 @@ local function SendTestMessage(target)
 
         local message = strjoin(";", unpack(TEST_MESSAGE))
         print("Sending test message to " .. target .. " (length=" .. #message .. ")")
-        Send("TMDM_ECWAv1", message, "WHISPER", target)
+        Send("TMDMv1", message, "WHISPER", target)
     end
 end
 
