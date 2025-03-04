@@ -59,29 +59,27 @@ end
 
 -------------------------------------------------------------------------------
 
--- TODO: Create TMDM config UI for these
-local GLOW_TYPE = 3 -- 2,3
 local GLOW_COLOR = { 0.95, 0.95, 0.32, 1 } -- yellowish
 
 LGF.ScanForUnitFrames()
 
-function ns.actions:FrameGlow(unit, duration)
-    local frame = LGF.GetUnitFrame(unit)
+function ns.actions:FrameGlow(glow, duration)
+    local frame = LGF.GetUnitFrame(glow.unit)
     if frame then
         if frame._unglowTimer then
             frame._unglowTimer:Cancel()
             frame._unglow(frame)
         end
 
-        if GLOW_TYPE == 1 then
-            LCG.AutoCastGlow_Start(frame, GLOW_COLOR, 12)
-            frame._unglow = LCG.AutoCastGlow_Stop
-        elseif GLOW_TYPE == 2 then
-            LCG.ButtonGlow_Start(frame, GLOW_COLOR)
-            frame._unglow = LCG.ButtonGlow_Stop
-        else -- glowType == 3
-            LCG.PixelGlow_Start(frame, GLOW_COLOR)
+        if glow.type == 1 then
+            LCG.PixelGlow_Start(frame, glow.color or GLOW_COLOR)
             frame._unglow = LCG.PixelGlow_Stop
+        elseif glow.type == 2 then
+            LCG.AutoCastGlow_Start(frame, glow.color or GLOW_COLOR, 12)
+            frame._unglow = LCG.AutoCastGlow_Stop
+        else -- glow.type == 3
+            LCG.ButtonGlow_Start(frame, glow.color or GLOW_COLOR)
+            frame._unglow = LCG.ButtonGlow_Stop
         end
 
         frame._unglowTimer = C_Timer.NewTimer(duration, function()
@@ -160,7 +158,6 @@ local SHAPES = {
     t = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\triangle.png",
     g = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\tmdm.png",
     -- q = square
-    -- l = line
 }
 
 function ns.actions:Diagram(lines, shapes, duration)

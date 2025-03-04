@@ -60,13 +60,18 @@ local function tochat(value)
     end
 end
 
-local function toplayerlist(value)
-    -- value == PlayerName1,PlayerName2,PlayerName3
-    local players = {}
-    for i, name in ipairs({ strsplit(",", value) }) do
-        players[#players + 1] = strtrim(name)
+local function toglows(value)
+    -- value == glow,glow,glow
+    -- glow = unit[:type[:r:g:b:a]]
+    local glows = {}
+    for i, glow in ipairs({ strsplit(",", value) }) do
+        local unit, type, r, g, b, a = strsplit(":", glow)
+        glows[i] = { unit = strtrim(unit), type = tonumber(type) or 1 }
+        if r and g and b then
+            glows[i].color = { tonumber(r), tonumber(g), tonumber(b), tonumber(a) or 1 }
+        end
     end
-    return players
+    return glows
 end
 
 local function tolines(value)
@@ -124,7 +129,7 @@ local addonMessageFields = {
     c = { "chat", tochat },
     d = { "duration", tonumber },
     e = { "emote", tostring },
-    g = { "glow", toplayerlist },
+    g = { "glows", toglows },
     m = { "message2", tostring },
     m1 = { "message1", tostring },
     m2 = { "message2", tostring },
@@ -179,9 +184,9 @@ local function processMessage(addonMessage)
         ns.actions:SoundFile(data.sound)
     end
 
-    if data.glow then
-        for _, name in ipairs(data.glow) do
-            ns.actions:FrameGlow(name, data.duration or 5)
+    if data.glows then
+        for _, glow in ipairs(data.glows) do
+            ns.actions:FrameGlow(glow, data.duration or 5)
         end
     end
 
