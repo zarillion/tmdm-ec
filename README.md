@@ -74,7 +74,7 @@ Banner messages are the most basic and critical display this addon utilizes.
 These are sent using the `m`, `m1`, `m2` or `m3` fields. These messages appear
 as large text at the top-center of the player's screen.
 
-    m[1,2,3]=MESSAGE
+    m[1|2|3]=MESSAGE
 
 - The three message lines are stacked on top of each other with `m1` on top and
   `m3` on bottom.
@@ -131,15 +131,95 @@ color. It does _not_ broadcast an emote from that player to others.
 
 ### Unit Frame Glows
 
-TODO
+Unit frames can be highlighted with a glow using the `g` field.
+
+    g=UNIT:[TYPE=1]:[R:G:B[:A]],...
+
+The `TYPE` value selects the type of glow that should be used. The remaining
+fields allow you override the color of the glow.
+
+- The [LibGetFrame](https://www.curseforge.com/wow/addons/libgetframe) library
+  is used to fetch the requested unit frame.
+- The [LibCustomGlow](https://www.curseforge.com/wow/addons/libcustomglow)
+  library is used to apply a glow to the frame.
+- Uses the `d` field to control the glow duration.
+- The default color is a pale yellow.
+
+| `TYPE` | Glow                                           |
+| ------ | ---------------------------------------------- |
+| `1`    | Pixel glow (rotating dashed lines) (_default_) |
+| `2`    | Auto-cast glow (rotating particles)            |
+| `3`    | Button glow (ability proc glow)                |
+
+#### Examples
+
+- `g=Bootyhoof,Krushmaster,Kingkonk`
+- `g=Bozo:2:.9:0:0,Dingus::0:1:0:.5`
 
 ### Special Resource Bar
 
-TODO
+A large special resource bar can be displayed at the top-center of the screen
+using the `b` field.
+
+    b=UNIT:RESOURCE[:TIMER]
+
+This bar will a resource type of the target unit. It can optionally display a
+red countdown spark-line to indicate a time limit on dealing with this unit.
+
+| `RESOURCE` | Description                |
+| ---------- | -------------------------- |
+| `1`        | Health                     |
+| `2`        | Power (mana, energy, etc.) |
+| `3`        | Damage Absorb              |
+| `4`        | Healing Absorb             |
+
+When called without a `TIMER` value, the red line will not appear and the bar
+will remain active until another message is sent with either `b=` or `b=::0` as
+the value.
+
+#### Examples
+
+- `b=boss1:3:20`
+- `b=boss2:2`
+- `b=`, `b=::0` (stop the display)
 
 ### Diagram Frame
 
-TODO
+A diagram frame for displaying shapes and lines can be shown using the `l` or
+`z` fields.
+
+    l=X:Y:X:Y:[THICKNESS=4]:[R=1]:[G=1]:[B=1]:[A=1],...
+    z=SHAPE:[X=0]:[Y=0]:[R=1]:[G=1]:[B=1]:[A=1]:[SCALE=1]:[ANGLE=0],...
+
+Lines are drawn between two XY coordinates and allow the thickness and color to
+be customized. A number of shape textures are included in the addon (see table
+below) and are positioned using their center-point. The color, scale and angle
+(radians) of each shape can be customized.
+
+When submitted together in a single message, lines are drawn first followed by
+shapes. Each subsequent shape uses an increasing texture sub-level to ensure it
+is drawn on top of the previous shape.
+
+- The frame supports up to 10 lines and 16 shapes in a single display.
+- The frame is 256x256 pixels and clips shapes that go outside of that area.
+- Sending a new diagram will clear any previously displayed diagram.
+- The default color of all lines and shapes is `1:1:1:1` (white).
+- Uses the `d` field to control the display duration.
+
+| `SHAPE` | Name     |     | `SHAPE` | Name      |
+| ------- | -------- | --- | ------- | --------- |
+| `c`     | Circle   |     | `q`     | Square    |
+| `x`     | Cross    |     | `p`     | Pentagon  |
+| `d`     | Diamond  |     | `h`     | Hexagon   |
+| `m`     | Moon     |     | `y`     | Heptagon  |
+| `s`     | Star     |     | `o`     | Octogon   |
+| `t`     | Triangle |     | `g`     | TMDM logo |
+
+#### Examples
+
+- `l=-50:-50:50:50`
+- `z=c:-50,x:50`
+- `z=h::50,h:-25,h:25,h:-50:-50,h::-50:0:0.8:0,h:50:-50`
 
 ### Sound Notifications
 
@@ -173,6 +253,9 @@ character count.
 ### Display Duration
 
 The duration of most of the addon's displays are controlled using the `d` field.
+
+    d=SECONDS
+
 This field defines the duration of the display in seconds. When included in a
 message, the duration is applied to _all_ associated displays in that message.
 Displays with different duration requirements must be sent as separate messages.
