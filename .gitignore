@@ -44,3 +44,6 @@ Libs*/
 
 # Release / packaging directory
 .release/
+
+# TODO notes
+TODO.*

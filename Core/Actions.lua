@@ -19,6 +19,7 @@ end
 -------------------------------------------------------------------------------
 
 function ns.actions:EmoteMessage(message)
+    message = message:gsub("||", "|") -- restore escape sequences
     local emote = ChatTypeInfo["EMOTE"]
     DEFAULT_CHAT_FRAME:AddMessage(message, emote.r, emote.g, emote.b)
 end
@@ -26,7 +27,7 @@ end
 -------------------------------------------------------------------------------
 
 local function ResolveSoundPath(sound)
-    if not sound:find("[/\\]") then
+    if not (sound:match("^%d+$") or sound:find("[/\\]")) then
         sound = sound:lower():gsub(" ", "")
         for name, path in pairs(LSM:HashTable("sound")) do
             if sound == name:lower():gsub(" ", "") then
@@ -34,6 +35,7 @@ local function ResolveSoundPath(sound)
             end
         end
     end
+
     return sound
 end
 
@@ -45,7 +47,12 @@ function ns.actions:SoundFile(sound)
 
     local last = LAST_PLAYED[sound] or 0
     if GetTime() - last > 1 then
-        PlaySoundFile(sound, "Master")
+        if sound:match("^%d+$") then
+            ---@diagnostic disable-next-line: param-type-mismatch
+            PlaySound(tonumber(sound), "Master")
+        else
+            PlaySoundFile(sound, "Master")
+        end
         LAST_PLAYED[sound] = GetTime()
     end
 end

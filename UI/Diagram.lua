@@ -79,7 +79,6 @@ function TMDM_DiagramMixin:Stop()
         texture:SetTexture()
         texture:ClearAllPoints()
         texture:SetRotation(0)
-        texture:SetScale(1)
         texture:SetVertexColor(1, 1, 1, 1)
     end
     for _, line in ipairs(self.lines) do

@@ -49,12 +49,12 @@ end
 
 local function tochat(value)
     -- value == "CHANNEL [TARGET] MESSAGE"; TARGET only set for WHISPER channel
-    local channel, message = strsplit(" ", value, 2)
+    local channel, message = strsplit(":", value, 2)
     local target = nil
 
     if #channel > 0 and #message > 0 then
         if channel == "WHISPER" then
-            target, message = strsplit(" ", message, 2)
+            target, message = strsplit(":", message, 2)
         end
         return { channel = channel, message = message, target = target }
     end
@@ -202,28 +202,26 @@ end
 
 local VALID_CHANNELS = { "PARTY", "RAID", "WHISPER" }
 
---[[ isValidMessage
+--[[ handleMessage
 
 Only allow messages from the PARTY, RAID and WHISPER channels, and only if they
 originate from the current group leader. All other messages are assumed to be
 malicious and ignored.
 
 ]]
-local function isValidMessage(channel, sender)
+local function handleMessage(message, channel, sender)
     local name, _ = strsplit("-", sender)
     local fromSelf = name == UnitName("player") -- for testing
     local validChannel = ns.Contains(VALID_CHANNELS, channel)
-    return validChannel and (fromSelf or UnitIsGroupLeader(name))
-end
-
--- Addon message prefixes
-local MESSAGE_PREFIX = "TMDM_ECWAv1"
-
--- Register the user's client to send/receive our addon messages
-C_ChatInfo.RegisterAddonMessagePrefix(MESSAGE_PREFIX)
-
-ns.prefixes[MESSAGE_PREFIX] = function(message, channel, sender)
-    if isValidMessage(channel, sender) then
+    if validChannel and (fromSelf or UnitIsGroupLeader(name)) then
         return processMessage(message)
     end
+end
+
+local MESSAGE_PREFIXES = { "TMDMv1", "TMDM_ECWAv1" } -- backward compat
+
+for _, prefix in ipairs(MESSAGE_PREFIXES) do
+    -- Register the user's client to send/receive our addon messages
+    C_ChatInfo.RegisterAddonMessagePrefix(prefix)
+    ns.prefixes[prefix] = handleMessage
 end

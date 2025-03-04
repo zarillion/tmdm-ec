@@ -1,3 +1,22 @@
+# v2.4
+
+- Fixed color codes in `e=` emote messages.
+- Fixed sound notifications for some older file IDs.
+- Changed separator to `:` for `c=` messages.
+- Changed official V1 prefix to `TMDMv1` (the old `TMDM_ECWAv1` prefix is still
+  supported).
+
+# v2.3
+
+- Removed `shapes.psd` from the release file.
+- Fixed line displays in diagrams not resetting.
+
+# v2.2
+
+- Fixed version checks in large groups.
+- Added `b=unit:resource[:timer]` for special bar displays.
+- Added `z=shape[:options],...` for diagram displays.
+
 # v2.1
 
 - Fix group leader check.
