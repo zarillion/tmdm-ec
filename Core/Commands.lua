@@ -82,7 +82,7 @@ end
 local TEST_MESSAGE = {
     "m={rt2} TEST MESSAGE {rt5}",
     "s=569593", -- level up sound
-    "c=YELL {rt1} TEST {rt2}!",
+    "c=YELL:{rt1} TEST {rt2}!",
     "e=This is a test emote.",
     "b=player:1:5",
     "z=" .. strjoin(
