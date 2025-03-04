@@ -56,17 +56,17 @@ The **entire message** must fit in a single call to
 
 ### Fields
 
-| Field                        | Action                                         | Example                           |
-| ---------------------------- | ---------------------------------------------- | --------------------------------- |
-| [`b`](#special-resource-bar) | Track a unit resource as a special bar.        | `b=boss1:3:10`                    |
-| [`c`](#chat-messages)        | Trigger a SAY, YELL, RAID or WHISPER message.  | `c=SAY:Something is on me...`     |
-| [`d`](#display-duration)     | Duration for glows & messages (default: 5s)    | `d=10`, `d=6.5`                   |
-| [`e`](#emote-messages)       | Add an emote to the default chat frame         | `e=I messed up!`                  |
-| [`g`](#unit-frame-glows)     | Glow multiple player unit frames               | `g=player1,player2,player3`       |
-| [`l`](#diagram-frame)        | Draw one or more lines in the diagram frame.   | `l=-50:-50:50:50`                 |
-| [`m`](#banner-messages)      | Disply a large message (also `m1`, `m2`, `m3`) | `m={skull} SOAK MECHANIC {skull}` |
-| [`s`](#sound-notifications)  | Play a sound (FileDataID, sound name or path)  | `s=moan`, `s=569593`              |
-| [`z`](#diagram-frame)        | Draw one or more shapes in the diagram frame.  | `z=c:-50,x:50`                    |
+| Field                        | Action                                          | Example                           |
+| ---------------------------- | ----------------------------------------------- | --------------------------------- |
+| [`b`](#special-resource-bar) | Track a unit resource as a special bar.         | `b=boss1:3:10`                    |
+| [`c`](#chat-messages)        | Trigger a SAY, YELL, RAID or WHISPER message.   | `c=SAY:Something is on me...`     |
+| [`d`](#display-duration)     | Duration for glows & messages (default: 5s)     | `d=10`, `d=6.5`                   |
+| [`e`](#emote-messages)       | Add an emote to the default chat frame          | `e=I messed up!`                  |
+| [`g`](#unit-frame-glows)     | Glow multiple player unit frames                | `g=player1,player2,player3`       |
+| [`l`](#diagram-frame)        | Draw one or more lines in the diagram frame.    | `l=-50:-50:50:50`                 |
+| [`m`](#banner-messages)      | Display a large message (also `m1`, `m2`, `m3`) | `m={skull} SOAK MECHANIC {skull}` |
+| [`s`](#sound-notifications)  | Play a sound (FileDataID, sound name or path)   | `s=moan`, `s=569593`              |
+| [`z`](#diagram-frame)        | Draw one or more shapes in the diagram frame.   | `z=c:-50,x:50`                    |
 
 ### Banner Messages
 
