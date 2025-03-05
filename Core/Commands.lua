@@ -4,10 +4,11 @@
 
 local ADDON_NAME, ns = ...
 
--------------------------------------------------------------------------------
-
 -- Addon message prefixes
+local MESSAGE_PREFIX = "TMDMv1"
 local VERSION_PREFIX = "TMDM_ECWAvc"
+
+-------------------------------------------------------------------------------
 
 -- Register the user's client to send/receive our addon messages
 C_ChatInfo.RegisterAddonMessagePrefix(VERSION_PREFIX)
@@ -79,6 +80,18 @@ end
 
 -------------------------------------------------------------------------------
 
+local function SendCustomMessage(target, ...)
+    local message = strjoin(" ", ...)
+
+    if target == "PARTY" or target == "RAID" then
+        Send(MESSAGE_PREFIX, message, target)
+    else
+        Send(MESSAGE_PREFIX, message, "WHISPER", target)
+    end
+end
+
+-------------------------------------------------------------------------------
+
 local TEST_MESSAGE = {
     "m={rt2} TEST MESSAGE {rt5}",
     "s=569593", -- level up sound
@@ -116,7 +129,7 @@ local function SendTestMessage(target)
 
         local message = strjoin(";", unpack(TEST_MESSAGE))
         print("Sending test message to " .. target .. " (length=" .. #message .. ")")
-        Send("TMDMv1", message, "WHISPER", target)
+        Send(MESSAGE_PREFIX, message, "WHISPER", target)
     end
 end
 
@@ -128,13 +141,16 @@ ns.addon:RegisterChatCommand("tmdm", function(string)
     local args = { strsplit(" ", string) }
     local command = table.remove(args, 1)
 
-    if command == "test" then
+    if command == "send" then
+        SendCustomMessage(unpack(args))
+    elseif command == "test" then
         SendTestMessage(unpack(args))
     elseif command == "vc" then
         RunVersionCheck()
     else
         print(ICON .. " TMDM Encounter Client:")
         print(" ")
+        print("    /tmdm send TARGET MESSAGE - Send a custom message.")
         print("    /tmdm test [player] - Send a test message.")
         print("    /tmdm vc - Run a version check for all group members.")
         print(" ")
