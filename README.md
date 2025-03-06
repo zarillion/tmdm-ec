@@ -234,8 +234,7 @@ The `SOUND` value accepts either:
 1. A
    [LibSharedMedia](https://www.wowace.com/projects/libsharedmedia-3-0/pages/api-documentation)
    sound name to play a sound included in another addon.
-2. A `SoundKitID`, `FileDataID` or a sound file path (see
-   [PlaySound](https://warcraft.wiki.gg/wiki/API_PlaySound) and
+2. A `FileDataID` or a sound file path (see
    [PlaySoundFile](https://warcraft.wiki.gg/wiki/API_PlaySoundFile)).
 
 Sound names are searched using a case-insensitive match and spaces are removed.

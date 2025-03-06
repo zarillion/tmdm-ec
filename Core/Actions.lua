@@ -47,12 +47,7 @@ function ns.actions:SoundFile(sound)
 
     local last = LAST_PLAYED[sound] or 0
     if GetTime() - last > 1 then
-        if sound:match("^%d+$") then
-            ---@diagnostic disable-next-line: param-type-mismatch
-            PlaySound(tonumber(sound), "Master")
-        else
-            PlaySoundFile(sound, "Master")
-        end
+        PlaySoundFile(sound, "Master")
         LAST_PLAYED[sound] = GetTime()
     end
 end
