@@ -1,7 +1,11 @@
 # v2.4
 
+- Added the `/tmdm send TARGET MESSAGE` command for quickly testing fields and
+  values.
+- Added type, color, frequency and scale values for glows.
+- Increased the shape texture sizes to 256x256.
 - Fixed color codes in `e=` emote messages.
-- Fixed sound notifications for some older file IDs.
+- Updated the "outdated" list in the version checker to include version numbers.
 - Changed separator to `:` for `c=` messages.
 - Changed official V1 prefix to `TMDMv1` (the old `TMDM_ECWAv1` prefix is still
   supported).
