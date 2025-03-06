@@ -56,8 +56,6 @@ end
 
 local GLOW_COLOR = { 0.95, 0.95, 0.32, 1 } -- yellowish
 
-LGF.ScanForUnitFrames()
-
 function ns.actions:FrameGlow(glow, duration)
     local frame = LGF.GetUnitFrame(glow.unit)
     if frame then
@@ -66,14 +64,16 @@ function ns.actions:FrameGlow(glow, duration)
             frame._unglow(frame)
         end
 
+        local color = glow.color or GLOW_COLOR
+
         if glow.type == 1 then
-            LCG.PixelGlow_Start(frame, glow.color or GLOW_COLOR)
+            LCG.PixelGlow_Start(frame, color, nil, glow.frequency, nil, glow.scale)
             frame._unglow = LCG.PixelGlow_Stop
         elseif glow.type == 2 then
-            LCG.AutoCastGlow_Start(frame, glow.color or GLOW_COLOR, 12)
+            LCG.AutoCastGlow_Start(frame, color, 12, glow.frequency, glow.scale)
             frame._unglow = LCG.AutoCastGlow_Stop
         else -- glow.type == 3
-            LCG.ButtonGlow_Start(frame, glow.color or GLOW_COLOR)
+            LCG.ButtonGlow_Start(frame, color, glow.frequency)
             frame._unglow = LCG.ButtonGlow_Stop
         end
 

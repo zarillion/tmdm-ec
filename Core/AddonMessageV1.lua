@@ -62,13 +62,25 @@ end
 
 local function toglows(value)
     -- value == glow,glow,glow
-    -- glow = unit[:type[:r:g:b:a]]
+    -- glow = unit:[type=1]:[r:g:b:a]:[freq]:[scale]
     local glows = {}
     for i, glow in ipairs({ strsplit(",", value) }) do
-        local unit, type, r, g, b, a = strsplit(":", glow)
-        glows[i] = { unit = strtrim(unit), type = tonumber(type) or 1 }
-        if r and g and b then
-            glows[i].color = { tonumber(r), tonumber(g), tonumber(b), tonumber(a) or 1 }
+        local unit, type, r, g, b, a, freq, scale = strsplit(":", glow)
+
+        glows[i] = {
+            unit = strtrim(unit),
+            type = tonumber(type) or 1,
+            frequency = tonumber(freq),
+            scale = tonumber(scale),
+        }
+
+        local rn = tonumber(r)
+        local gn = tonumber(g)
+        local bn = tonumber(b)
+        local an = tonumber(a)
+
+        if rn and gn and bn then
+            glows[i].color = { rn, gn, bn, an or 1 }
         end
     end
     return glows

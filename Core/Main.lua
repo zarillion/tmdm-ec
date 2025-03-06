@@ -23,4 +23,9 @@ ns.addon:RegisterEvent("ENCOUNTER_END", function()
     _G["TMDM_DiagramFrame"]:Stop()
 end)
 
+ns.addon:RegisterEvent("PLAYER_ENTERING_WORLD", function()
+    -- Helps glows work on the first message after logging/reloading
+    LibStub("LibGetFrame-1.0").ScanForUnitFrames()
+end)
+
 _G.TMDM = ns

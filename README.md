@@ -135,7 +135,7 @@ color. It does _not_ broadcast an emote from that player to others.
 
 Unit frames can be highlighted with a glow using the `g` field.
 
-    g=UNIT:[TYPE=1]:[R:G:B[:A]],...
+    g=UNIT:[TYPE=1]:[R:G:B[:A]]:[FREQUENCY]:[SCALE],...
 
 The `TYPE` value selects the type of glow that should be used. The remaining
 fields allow you override the color of the glow.
@@ -144,6 +144,8 @@ fields allow you override the color of the glow.
   is used to fetch the requested unit frame.
 - The [LibCustomGlow](https://www.curseforge.com/wow/addons/libcustomglow)
   library is used to apply a glow to the frame.
+- The `FREQUENCY` and `SCALE` values are passed to `LibCustomGlow` where
+  applicable.
 - Uses the `d` field to control the glow duration.
 - The default color is a pale yellow.
 
