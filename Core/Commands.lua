@@ -83,6 +83,8 @@ end
 local function SendCustomMessage(target, ...)
     local message = strjoin(" ", ...)
 
+    print("Sending custom message to " .. target .. " (length=" .. #message .. ")")
+
     if target == "PARTY" or target == "RAID" then
         Send(MESSAGE_PREFIX, message, target)
     else
@@ -135,7 +137,7 @@ end
 
 -------------------------------------------------------------------------------
 
-local ICON = "|TInterface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\tmdm.png:0|t"
+local ICON = "|TInterface/Addons/" .. ADDON_NAME .. "/Resources/Textures/tmdm.png:0|t"
 
 ns.addon:RegisterChatCommand("tmdm", function(string)
     local args = { strsplit(" ", string) }
@@ -150,7 +152,7 @@ ns.addon:RegisterChatCommand("tmdm", function(string)
     else
         print(ICON .. " TMDM Encounter Client:")
         print(" ")
-        print("    /tmdm send TARGET MESSAGE - Send a custom message.")
+        print("    /tmdm send <target> <message> - Send a custom message.")
         print("    /tmdm test [player] - Send a test message.")
         print("    /tmdm vc - Run a version check for all group members.")
         print(" ")
