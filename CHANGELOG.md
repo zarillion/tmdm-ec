@@ -1,3 +1,8 @@
+# v2.5
+
+- Added support for generic timer bars to the `b` field.
+- The `/tmdm send` command now prints the message length.
+
 # v2.4
 
 - Added the `/tmdm send TARGET MESSAGE` command for quickly testing fields and
