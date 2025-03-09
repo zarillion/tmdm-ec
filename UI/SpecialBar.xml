@@ -56,5 +56,8 @@
     <Frames>
       <Frame name="$parentOverlay" inherits="TMDM_FrameOverlay"></Frame>
     </Frames>
+    <Scripts>
+      <OnLoad method="OnLoad"/>
+    </Scripts>
   </Frame>
 </Ui>

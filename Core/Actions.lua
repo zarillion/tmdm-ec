@@ -129,12 +129,14 @@ end
 
 -------------------------------------------------------------------------------
 
-function ns.actions:SpecialBar(unit, resource, timer)
+function ns.actions:SpecialBar(data)
     local frame = _G["TMDM_SpecialBar"]
-    if timer == 0 then
+    if data.timer == 0 then
         frame:Stop()
-    else
-        frame:Init(unit, resource, timer)
+    elseif data.unit ~= "" then
+        frame:DisplayUnit(data.unit, data.resource, data.timer, data.color)
+    elseif data.timer then
+        frame:DisplayTimer(data.timer, data.color)
     end
 end
 

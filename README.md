@@ -165,7 +165,7 @@ fields allow you override the color of the glow.
 A large special resource bar can be displayed at the top-center of the screen
 using the `b` field.
 
-    b=UNIT:RESOURCE[:TIMER]
+    b=[UNIT]:[RESOURCE][:TIMER][:R:G:B[:A]]
 
 This bar will a resource type of the target unit. It can optionally display a
 red countdown spark-line to indicate a time limit on dealing with this unit.
@@ -181,10 +181,14 @@ When called without a `TIMER` value, the red line will not appear and the bar
 will remain active until another message is sent with either `b=` or `b=::0` as
 the value.
 
+When called without a `UNIT` value, the `TIMER` value can be used to display a
+large generic timer bar.
+
 #### Examples
 
 - `b=boss1:3:20`
 - `b=boss2:2`
+- `b=::30`
 - `b=`, `b=::0` (stop the display)
 
 ### Diagram Frame

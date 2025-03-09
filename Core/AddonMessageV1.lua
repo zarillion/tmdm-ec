@@ -1,50 +1,26 @@
---[[
-
-This version (v1) of the addon message format allows simple field=value pairs to define
-actions the encounter client should take. Each pair is separated by a semicolon.
-
-    field=value;field=value;field=value
-
-The available fields are (all optional):
-
-    b   Track a unit resource on the special bar
-    c   The chat message to emit
-    d   The display duration (default 5s)
-    e   An emote to put in the chat frame
-    g   Glow player unit frames
-    m   The aura message to be displayed (also m1,m2,m3)
-    s   The sound to play
-    l   Draw one or more lines
-    z   Draw one or more shapes
-
-Some examples:
-
-    "m={skull} SOAK MECHANIC {skull}"
-    "m=GO IN THE CAGE; d=10"
-    "s=airhorn"
-    "m=RUN TO {diamond};s=moan"
-    "c=SAY Something is on me...;s=bikehorn"
-    "m=|cff00ff00COLOR TEST|r MESSAGE"
-
-Caveats:
-
-  * All messages received are assumed to be for us. This means the WHISPER channel must
-    be used to direct individuals, which does not work cross-realm.
-  * The message is limited to 255 characters as no serializer/compression or comms API
-    is used to split the messages.
-  * Duration is applied to both the glow and display if sent in the same message.
-
-]]
+-------------------------------------------------------------------------------
+------------------------------ ADDON MESSAGE V1 -------------------------------
+-------------------------------------------------------------------------------
 
 local ADDON_NAME, ns = ...
 
 local function tospecialbar(value)
-    -- value == "UNIT:RESOURCE[:TIMER]"
+    -- value == "UNIT:RESOURCE[:TIMER][:R:G:B:A]"
     if value == "" then
         return { timer = 0 }
     end
-    local unit, resource, timer = strsplit(":", value)
-    return { unit = unit, resource = tonumber(resource), timer = tonumber(timer) }
+    local unit, resource, timer, r, g, b, a = strsplit(":", value)
+    return {
+        unit = unit,
+        resource = tonumber(resource),
+        timer = tonumber(timer),
+        color = {
+            r = tonumber(r),
+            g = tonumber(g),
+            b = tonumber(b),
+            a = tonumber(a) or 1,
+        },
+    }
 end
 
 local function tochat(value)
@@ -203,7 +179,7 @@ local function processMessage(addonMessage)
     end
 
     if data.bar then
-        ns.actions:SpecialBar(data.bar.unit, data.bar.resource, data.bar.timer)
+        ns.actions:SpecialBar(data.bar)
     end
 
     if data.lines or data.shapes then

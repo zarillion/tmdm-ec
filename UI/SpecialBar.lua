@@ -61,10 +61,13 @@ end
 
 TMDM_SpecialBarMixin = {}
 
-function TMDM_SpecialBarMixin:Init(unit, resource, timer)
+function TMDM_SpecialBarMixin:OnLoad()
+    self.length = self:GetWidth() - 2
+end
+
+function TMDM_SpecialBarMixin:DisplayUnit(unit, resource, timer, color)
     self.unit = unit
     self.resource = resource
-    self.length = self:GetWidth() - 2
 
     if timer then
         self.timer = timer
@@ -80,24 +83,18 @@ function TMDM_SpecialBarMixin:Init(unit, resource, timer)
 
     self.max = GetMaxResource(unit, resource)
     self.current = GetCurrentResource(unit, resource)
-    self.Bar:SetColorTexture(GetResourceColor(unit, resource))
 
-    self:SetScript("OnUpdate", self.OnUpdate)
+    if color.r and color.g and color.b then
+        self.Bar:SetColorTexture(color.r, color.g, color.b, color.a)
+    else
+        self.Bar:SetColorTexture(GetResourceColor(unit, resource))
+    end
+
+    self:SetScript("OnUpdate", self.OnUpdateUnit)
     self:Show()
 end
 
-function TMDM_SpecialBarMixin:Stop()
-    self.unit = nil
-    self.resource = nil
-    self.max = nil
-    self.current = nil
-    self.timer = nil
-
-    self:SetScript("OnUpdate", nil)
-    self:Hide()
-end
-
-function TMDM_SpecialBarMixin:OnUpdate()
+function TMDM_SpecialBarMixin:OnUpdateUnit()
     self.current = GetCurrentResource(self.unit, self.resource)
     self.Bar:SetWidth(self.length * min(1, self.current / self.max))
     self.Text:SetText(AbbreviateLargeNumbers(self.current))
@@ -114,4 +111,40 @@ function TMDM_SpecialBarMixin:OnUpdate()
         self.Spark:SetPoint("TOPRIGHT", -1 - offset, -1)
         self.Spark:SetPoint("BOTTOMRIGHT", -1 - offset, 1)
     end
+end
+
+function TMDM_SpecialBarMixin:DisplayTimer(timer, color)
+    self.timer = timer
+    self.start = GetTime()
+    self.Spark:Hide()
+    self.Bar:SetColorTexture(color.r or 1, color.g or 1, color.b or 1, color.a)
+
+    self:SetScript("OnUpdate", self.OnUpdateTimer)
+    self:Show()
+end
+
+function TMDM_SpecialBarMixin:OnUpdateTimer()
+    local elapsed = GetTime() - self.start
+    local remaining = self.timer - elapsed
+    local progress = elapsed / self.timer
+
+    if progress > 1 then
+        self:Stop()
+        return
+    end
+
+    self.Bar:SetWidth(self.length * (1 - progress))
+    self.Text:SetText(format("%.1f", remaining))
+end
+
+function TMDM_SpecialBarMixin:Stop()
+    self.unit = nil
+    self.resource = nil
+    self.max = nil
+    self.current = nil
+    self.timer = nil
+
+    self:SetScript("OnUpdate", nil)
+    self.Spark:Hide()
+    self:Hide()
 end
