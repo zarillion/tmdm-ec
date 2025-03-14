@@ -1,3 +1,7 @@
+# v2.6
+
+- Added utilities for parsing YAML objects in MRT notes.
+
 # v2.5
 
 - Added support for generic timer bars to the `b` field.

@@ -12,6 +12,7 @@ Core/Actions.lua
 Core/Commands.lua
 Core/AddonMessageV1.lua
 # Core/AddonMessageV2.lua
+Core/YAML.lua
 UI/Overlay.xml
 UI/Message.xml
 UI/Diagram.xml

@@ -36,6 +36,33 @@ local function tochat(value)
     end
 end
 
+local function tofilters(value)
+    -- value == TARGET,TARGET,TARGET
+    local filters = {
+        players = {},
+        roles = {},
+        classes = {},
+        specs = {},
+    }
+
+    for _, filter in ipairs({ strsplit(",", value) }) do
+        if filter:find(":") then
+            local type, target = strsplit(":", filter)
+            if type == "r" then
+                table.insert(filters.roles, target)
+            elseif type == "c" then
+                table.insert(filters.classes, target)
+            elseif type == "s" then
+                table.insert(filters.specs, target)
+            end
+        else
+            table.insert(filters.players, filter)
+        end
+    end
+
+    return filters
+end
+
 local function toglows(value)
     -- value == glow,glow,glow
     -- glow = unit:[type=1]:[r:g:b:a]:[freq]:[scale]
@@ -117,6 +144,7 @@ local addonMessageFields = {
     c = { "chat", tochat },
     d = { "duration", tonumber },
     e = { "emote", tostring },
+    f = { "filters", tofilters },
     g = { "glows", toglows },
     m = { "message2", tostring },
     m1 = { "message1", tostring },
@@ -157,6 +185,12 @@ local function processMessage(addonMessage)
         local field, value = parseField(strsplit("=", chunk, 2))
         if field and value then
             data[field] = value
+        end
+    end
+
+    if data.filters then
+        if not ns.actions:IsMessageRecipient(data.filters) then
+            return -- this message aint for us
         end
     end
 

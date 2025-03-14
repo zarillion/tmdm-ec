@@ -64,6 +64,7 @@ The **entire message** must fit in a single call to
 | [`c`](#chat-messages)        | Trigger a SAY, YELL, RAID or WHISPER message.   | `c=SAY:Something is on me...`     |
 | [`d`](#display-duration)     | Duration for glows & messages (default: 5s)     | `d=10`, `d=6.5`                   |
 | [`e`](#emote-messages)       | Add an emote to the default chat frame          | `e=I messed up!`                  |
+| [`f`](#player-filters)       | Filter the recipients for group messages.       | `f=player1,player2,player3`       |
 | [`g`](#unit-frame-glows)     | Glow multiple player unit frames                | `g=player1,player2,player3`       |
 | [`l`](#diagram-frame)        | Draw one or more lines in the diagram frame.    | `l=-50:-50:50:50`                 |
 | [`m`](#banner-messages)      | Display a large message (also `m1`, `m2`, `m3`) | `m={skull} SOAK MECHANIC {skull}` |
@@ -130,6 +131,31 @@ color. It does _not_ broadcast an emote from that player to others.
 - `e=Something ominous is coming ...`
 - `e=Dumbass and Mcgee collided causing a wipe!`
 - `e=|cff8788EEWarlocko|r is the bomb!`
+
+### Player Filters
+
+Individual players can be targeted as the recipients of `PARTY` or `RAID` addon
+messages using the `f` field. This helps avoid the rate limit on sending
+messages.
+
+```
+f=TARGET[,TARGET]...
+```
+
+A `TARGET` value can be either a player name or a `TYPE:VALUE` combination
+according to the following table. For players, do not include the realm name.
+
+| `TYPE` | Description                                                                      |
+| ------ | -------------------------------------------------------------------------------- |
+| `r`    | Role Name - `TANK`, `HEALER`, `DAMAGER`, `MELEE`, `RANGED`                       |
+| `c`    | Class Name - `DEATHKNIGHT`, `WARRIOR`, `WARLOCK`, ...                            |
+| `s`    | Spec ID - See [SpecializationID](https://warcraft.wiki.gg/wiki/SpecializationID) |
+
+#### Examples
+
+- `f=Dumbass,Mcgee`
+- `f=r:TANK,r:MELEE,s:256`
+- `f=c:WARLOCK,r:HEAL`
 
 ### Unit Frame Glows
 

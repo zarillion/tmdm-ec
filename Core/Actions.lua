@@ -12,6 +12,40 @@ local LSM = LibStub("LibSharedMedia-3.0")
 
 -------------------------------------------------------------------------------
 
+local MELEE = { 65, 66, 70, 71, 72, 73, 103, 104, 250, 251, 252, 255, 259, 260, 261, 263, 268, 269, 270, 577, 581 }
+local RANGED = { 62, 63, 64, 102, 105, 253, 254, 256, 257, 258, 262, 264, 265, 266, 267, 1467, 1468, 1473 }
+
+function ns.actions:IsMessageRecipient(filters)
+    -- Check players
+    if ns.Contains(filters.players, UnitName("player")) then
+        return true
+    end
+
+    -- Check classes
+    if ns.Contains(filters.classes, select(2, UnitClass("player"))) then
+        return true
+    end
+
+    -- Check specs
+    local spec, _, _, _, role = GetSpecializationInfo(GetSpecialization())
+    if ns.Contains(filters.specs, spec) then
+        return true
+    end
+
+    -- Check roles
+    if ns.Contains(filters.roles, role) then
+        return true
+    elseif ns.Contains(filters.roles, "MELEE") and ns.Contains(MELEE, spec) then
+        return true
+    elseif ns.Contains(filters.roles, "RANGED") and ns.Contains(RANGED, spec) then
+        return true
+    end
+
+    return false
+end
+
+-------------------------------------------------------------------------------
+
 function ns.actions:ChatMessage(message, channel, target)
     SendChatMessage(message, channel, nil, target)
 end

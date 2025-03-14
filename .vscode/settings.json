@@ -30,8 +30,10 @@
   ],
   "Lua.diagnostics.globals": [
     "ChatTypeInfo",
+    "Details",
     "DEFAULT_CHAT_FRAME",
-    "AbbreviateLargeNumbers"
+    "AbbreviateLargeNumbers",
+    "VExRT"
   ],
   "Lua.workspace.ignoreDir": [
     ".vscode",

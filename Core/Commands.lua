@@ -10,6 +10,12 @@ local VERSION_PREFIX = "TMDM_ECWAvc"
 
 -------------------------------------------------------------------------------
 
+local function DebugMRTNote()
+    DevTools_Dump(ns.ParseMRTNote())
+end
+
+-------------------------------------------------------------------------------
+
 -- Register the user's client to send/receive our addon messages
 C_ChatInfo.RegisterAddonMessagePrefix(VERSION_PREFIX)
 
@@ -143,7 +149,9 @@ ns.addon:RegisterChatCommand("tmdm", function(string)
     local args = { strsplit(" ", string) }
     local command = table.remove(args, 1)
 
-    if command == "send" then
+    if command == "note" then
+        DebugMRTNote()
+    elseif command == "send" then
         SendCustomMessage(unpack(args))
     elseif command == "test" then
         SendTestMessage(unpack(args))
@@ -152,6 +160,7 @@ ns.addon:RegisterChatCommand("tmdm", function(string)
     else
         print(ICON .. " TMDM Encounter Client:")
         print(" ")
+        print("    /tmdm note - Debug note assignments.")
         print("    /tmdm send <target> <message> - Send a custom message.")
         print("    /tmdm test [player] - Send a test message.")
         print("    /tmdm vc - Run a version check for all group members.")
