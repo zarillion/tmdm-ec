@@ -1,5 +1,6 @@
 # v2.6
 
+- Added `f` field for filtering message recipients.
 - Added utilities for parsing YAML objects in MRT notes.
 
 # v2.5
