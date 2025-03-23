@@ -16,6 +16,15 @@ ns.addon:RegisterEvent("CHAT_MSG_ADDON", function(_, prefix, message, channel, s
     end
 end)
 
+ns.GUIDs = {} -- lookup table for group members
+
+ns.addon:RegisterEvent("ENCOUNTER_START", function()
+    table.wipe(ns.GUIDs)
+    for unit in ns.IterateGroupMembers() do
+        ns.GUIDs[UnitGUID(unit)] = unit
+    end
+end)
+
 ns.addon:RegisterEvent("ENCOUNTER_END", function()
     -- Hide all displays when an encounter ends
     _G["TMDM_MessageFrame"]:Stop()

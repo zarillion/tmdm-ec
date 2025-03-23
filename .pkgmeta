@@ -7,6 +7,7 @@ externals:
   Libs/LibCustomGlow-1.0: https://github.com/Stanzilla/LibCustomGlow
   Libs/LibGetFrame-1.0: https://github.com/mrbuds/LibGetFrame
   Libs/LibSharedMedia-3.0: https://repos.curseforge.com/wow/libsharedmedia-3-0/trunk/LibSharedMedia-3.0
+  Libs/LibOpenRaid-1.0: https://github.com/Tercioo/Open-Raid-Library
 
 manual-changelog:
   filename: CHANGELOG.md
@@ -31,6 +32,11 @@ ignore:
   - Libs/LibGetFrame-1.0/README.md
   - Libs/LibGetFrame-1.0/stylua.toml
   - Libs/LibSharedMedia-3.0/lib.xml
+  - Libs/LibOpenRaid-1.0/classes.lua
+  - Libs/LibOpenRaid-1.0/docs.txt
+  - Libs/LibOpenRaid-1.0/LibOpenRaid.toc
+  - Libs/LibOpenRaid-1.0/LICENSE
+  - Libs/LibOpenRaid-1.0/README.md
   - Libs/LibStub/LibStub.toc
   - Libs/LibStub/tests
   - shapes.psd
