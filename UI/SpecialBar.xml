@@ -5,11 +5,8 @@
 
   <Script file="SpecialBar.lua"/>
 
-  <Frame name="TMDM_SpecialBar" mixin="TMDM_SpecialBarMixin" parent="UIParent" clampedToScreen="true" hidden="true">
+  <Frame name="TMDM_SpecialBar" mixin="TMDM_SpecialBarMixin" parent="UIParent" movable="true" clampedToScreen="true" hidden="true">
     <Size x="600" y="24" />
-    <Anchors>
-      <Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="TMDM_MessageFrame" y="20" />
-    </Anchors>
     <Layers>
         <Layer level="BACKGROUND">
           <Texture parentKey="BG">
@@ -41,7 +38,7 @@
           </Texture>
         </Layer>
         <Layer level="OVERLAY" textureSubLevel="1">
-          <FontString parentKey="Text" font="Fonts\FRIZQT__.TTF" text="TEST" outline="NORMAL" justifyH="RIGHT">
+          <FontString parentKey="Text" font="Fonts\FRIZQT__.TTF" text="TIMER" outline="NORMAL" justifyH="RIGHT">
             <FontHeight val="20"/>
             <Anchors>
               <Anchor point="RIGHT" x="-5" />
@@ -54,7 +51,7 @@
         </Layer>
     </Layers>
     <Frames>
-      <Frame name="$parentOverlay" inherits="TMDM_FrameOverlay"></Frame>
+      <Frame parentKey="Overlay" inherits="TMDM_FrameOverlay"></Frame>
     </Frames>
     <Scripts>
       <OnLoad method="OnLoad"/>

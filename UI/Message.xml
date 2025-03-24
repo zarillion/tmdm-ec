@@ -5,18 +5,15 @@
   <Script file="Message.lua"/>
 
   <FontString name="TMDM_MessageFont" virtual="true" font="Fonts\FRIZQT__.TTF" outline="NORMAL" justifyH="CENTER">
-    <FontHeight val="60"/>
+    <FontHeight val="40"/>
     <Shadow>
       <Offset x="1" y="-1" />
       <Color r="0" g="0" b="0"/>
     </Shadow>
   </FontString>
 
-  <Frame name="TMDM_MessageFrame" mixin="TMDM_MessageMixin" parent="UIParent" clampedToScreen="true" hidden="true">
-    <Size x="800" y="180" />
-    <Anchors>
-      <Anchor point="TOP" y="-100" />
-    </Anchors>
+  <Frame name="TMDM_MessageFrame" mixin="TMDM_MessageMixin" parent="UIParent" movable="true" clampedToScreen="true" hidden="true">
+    <Size x="600" y="120" />
     <Layers>
       <Layer level="OVERLAY">
         <FontString parentKey="Text1" text="" inherits="TMDM_MessageFont">
@@ -37,7 +34,10 @@
       </Layer>
     </Layers>
     <Frames>
-      <Frame name="$parentOverlay" inherits="TMDM_FrameOverlay"></Frame>
+      <Frame parentKey="Overlay" inherits="TMDM_FrameOverlay"></Frame>
     </Frames>
+    <Scripts>
+      <OnLoad method="OnLoad"/>
+    </Scripts>
   </Frame>
 </Ui>

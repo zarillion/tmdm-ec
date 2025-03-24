@@ -28,6 +28,11 @@ function TMDM_DiagramMixin:OnLoad()
             self.lines[#self.lines + 1] = line
         end
     end
+
+    if not self:IsUserPlaced() then
+        self:ClearAllPoints()
+        self:SetPoint("CENTER", 400, 50)
+    end
 end
 
 function TMDM_DiagramMixin:Display(lines, shapes, duration)
@@ -88,4 +93,39 @@ function TMDM_DiagramMixin:Stop()
         line:SetVertexColor(1, 1, 1, 1)
     end
     self:Hide()
+end
+
+function TMDM_DiagramMixin:Unlock()
+    self.textures[1]:SetTexture("Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\tmdm.png")
+    self.textures[1]:ClearAllPoints()
+    self.textures[1]:SetPoint("CENTER", 0, 0)
+    self.textures[1]:SetSize(100, 100)
+    self:SetMovable(true)
+    self:EnableMouse(true)
+    self:RegisterForDrag("LeftButton")
+    self:SetScript("OnDragStart", function(self)
+        self:StartMoving()
+    end)
+    self:SetScript("OnDragStop", function(self)
+        self:StopMovingOrSizing()
+    end)
+    self.Overlay:Show()
+    self:Show()
+end
+
+function TMDM_DiagramMixin:Lock()
+    self:SetMovable(false)
+    self:EnableMouse(false)
+    self:RegisterForDrag()
+    self:SetScript("OnDragStart", nil)
+    self:SetScript("OnDragStop", nil)
+    self.Overlay:Hide()
+    self:Stop()
+end
+
+function TMDM_DiagramMixin:Reset()
+    self:StartMoving()
+    self:ClearAllPoints()
+    self:SetPoint("CENTER", 400, 50)
+    self:StopMovingOrSizing()
 end

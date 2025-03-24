@@ -100,6 +100,29 @@ end
 
 -------------------------------------------------------------------------------
 
+local LOCKED = true
+
+local function ToggleFrameLocks()
+    if LOCKED then
+        for frame in TMDM.Frames() do
+            frame:Unlock()
+        end
+    else
+        for frame in TMDM.Frames() do
+            frame:Lock()
+        end
+    end
+    LOCKED = not LOCKED
+end
+
+local function ResetFramePositions()
+    for frame in TMDM.Frames() do
+        frame:Reset()
+    end
+end
+
+-------------------------------------------------------------------------------
+
 local TEST_MESSAGE = {
     "m={rt2} TEST MESSAGE {rt5}",
     "s=569593", -- level up sound
@@ -155,6 +178,10 @@ ns.addon:RegisterChatCommand("tmdm", function(string)
         SendCustomMessage(unpack(args))
     elseif command == "test" then
         SendTestMessage(unpack(args))
+    elseif command == "lock" then
+        ToggleFrameLocks()
+    elseif command == "reset" then
+        ResetFramePositions()
     elseif command == "vc" then
         RunVersionCheck()
     else
@@ -163,6 +190,8 @@ ns.addon:RegisterChatCommand("tmdm", function(string)
         print("    /tmdm note - Debug note assignments.")
         print("    /tmdm send <target> <message> - Send a custom message.")
         print("    /tmdm test [player] - Send a test message.")
+        print("    /tmdm lock - Toggle frame highlights allowing them to be moved.")
+        print("    /tmdm reset - Reset positions of all TMDM frames.")
         print("    /tmdm vc - Run a version check for all group members.")
         print(" ")
     end

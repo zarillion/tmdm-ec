@@ -75,6 +75,21 @@ function ns.ParseMRTNote()
     end
 end
 
+function ns.Frames()
+    local i = 0
+    local frames = {
+        _G["TMDM_MessageFrame"],
+        _G["TMDM_SpecialBar"],
+        _G["TMDM_DiagramFrame"],
+    }
+    return function()
+        i = i + 1
+        if i <= #frames then
+            return frames[i]
+        end
+    end
+end
+
 ------------------------------- DIAGRAM SHAPES --------------------------------
 
 local Shape = {}
