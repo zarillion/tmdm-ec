@@ -1,3 +1,9 @@
+# v2.7
+
+- Added `/tmdm lock` command for moving the display frames.
+- Added `/tmdm reset` command for resetting frame positions.
+- Added utilities for group sorting.
+
 # v2.6
 
 - Added `f` field for filtering message recipients.
