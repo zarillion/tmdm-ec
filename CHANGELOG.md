@@ -1,3 +1,12 @@
+# v2.8
+
+- Added texture database support to the diagram frame.
+- Added text-boxes to the diagram frame.
+- Added target marker texture support to the diagram frame.
+- Added `TMDM.Emit()` function with support for messages over 255 characters.
+- Added more diagraming utilities.
+- Added background image for Sprocketmonger Lockenstocks's room.
+
 # v2.7
 
 - Added `/tmdm lock` command for moving the display frames.
