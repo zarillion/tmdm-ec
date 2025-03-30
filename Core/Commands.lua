@@ -4,10 +4,6 @@
 
 local ADDON_NAME, ns = ...
 
--- Addon message prefixes
-local MESSAGE_PREFIX = "TMDMv1"
-local VERSION_PREFIX = "TMDM_ECWAvc"
-
 -------------------------------------------------------------------------------
 
 local function DebugMRTNote()
@@ -16,12 +12,17 @@ end
 
 -------------------------------------------------------------------------------
 
+-- Addon message prefixes
+local VERSION_PREFIX = "TMDM_ECWAvc"
+
 -- Register the user's client to send/receive our addon messages
 C_ChatInfo.RegisterAddonMessagePrefix(VERSION_PREFIX)
 
-local Send = C_ChatInfo.SendAddonMessage
-
 local VERSIONS = {}
+
+local function SendVersionMessage(message, channel, target)
+    C_ChatInfo.SendAddonMessage(VERSION_PREFIX, message, channel, target)
+end
 
 local function InitializeVersion(unit)
     local player = ns.GetFullUnitName(unit)
@@ -38,15 +39,15 @@ local function RunVersionCheck()
         for i = 1, 40 do
             InitializeVersion("raid" .. i)
         end
-        Send(VERSION_PREFIX, "request", "RAID")
+        SendVersionMessage("request", "RAID")
     elseif IsInGroup() then
         for i = 1, 4 do
             InitializeVersion("party" .. i)
         end
-        Send(VERSION_PREFIX, "request", "PARTY")
+        SendVersionMessage("request", "PARTY")
     else
         -- Not in a group, just sent to ourselves =)
-        Send(VERSION_PREFIX, "request", "WHISPER", UnitName("player"))
+        SendVersionMessage("request", "WHISPER", UnitName("player"))
     end
 
     C_Timer.After(3, function()
@@ -78,7 +79,7 @@ end
 
 ns.prefixes[VERSION_PREFIX] = function(message, _, sender)
     if message == "request" then
-        Send(VERSION_PREFIX, ns.addon.version, "WHISPER", sender)
+        SendVersionMessage(ns.addon.version, "WHISPER", sender)
     else
         VERSIONS[sender] = message
     end
@@ -92,9 +93,9 @@ local function SendCustomMessage(target, ...)
     print("Sending custom message to " .. target .. " (length=" .. #message .. ")")
 
     if target == "PARTY" or target == "RAID" then
-        Send(MESSAGE_PREFIX, message, target)
+        ns.Emit(message, target)
     else
-        Send(MESSAGE_PREFIX, message, "WHISPER", target)
+        ns.Emit(message, "WHISPER", target)
     end
 end
 
@@ -104,11 +105,11 @@ local LOCKED = true
 
 local function ToggleFrameLocks()
     if LOCKED then
-        for frame in TMDM.Frames() do
+        for frame in ns.addon:Frames() do
             frame:Unlock()
         end
     else
-        for frame in TMDM.Frames() do
+        for frame in ns.addon:Frames() do
             frame:Lock()
         end
     end
@@ -116,7 +117,7 @@ local function ToggleFrameLocks()
 end
 
 local function ResetFramePositions()
-    for frame in TMDM.Frames() do
+    for frame in ns.addon:Frames() do
         frame:Reset()
     end
 end
@@ -157,10 +158,7 @@ local function SendTestMessage(target)
     target = target or UnitName("target") or UnitName("player")
     if target and UnitIsFriend("player", target) then
         TEST_MESSAGE[#TEST_MESSAGE] = "g=" .. target
-
-        local message = strjoin(";", unpack(TEST_MESSAGE))
-        print("Sending test message to " .. target .. " (length=" .. #message .. ")")
-        Send(MESSAGE_PREFIX, message, "WHISPER", target)
+        ns.Emit(strjoin(";", unpack(TEST_MESSAGE)), "WHISPER", target)
     end
 end
 

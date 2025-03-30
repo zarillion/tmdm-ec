@@ -1,10 +1,20 @@
 -------------------------------------------------------------------------------
----------------------------------- UTILITIES ----------------------------------
+------------------------------- AURA UTILITIES --------------------------------
 -------------------------------------------------------------------------------
 
 local ADDON_NAME, ns = ...
 
 local LOR = LibStub("LibOpenRaid-1.0")
+
+-------------------------------------------------------------------------------
+
+function ns.Emit(message, channel, target)
+    if #message > 255 then
+        ns.addon:SendCommMessage("TMDMv2", message, channel, target, "ALERT")
+    else
+        C_ChatInfo.SendAddonMessage("TMDMv1", message, channel, target)
+    end
+end
 
 -------------------------------------------------------------------------------
 
@@ -25,6 +35,29 @@ function ns.IndexOf(values, value)
     end
     return nil
 end
+
+------------------------------- NOTE UTILITIES -------------------------------
+
+function ns.ParseMRTNote()
+    if C_AddOns.IsAddOnLoaded("MRT") and VExRT.Note.Text1 then
+        local text = VExRT.Note.Text1
+        local yaml = false
+        local data = ""
+
+        for line in text:gmatch("[^\r\n]+") do
+            line = line:gsub("||", "|")
+            if line == ">>>" then
+                yaml = true
+            elseif line == "<<<" then
+                return TMDM.YAML.eval(data)
+            elseif yaml then
+                data = data .. line .. "\r\n"
+            end
+        end
+    end
+end
+
+------------------------------- UNIT UTILITIES -------------------------------
 
 function ns.GetFullUnitName(unit)
     local name, realm = UnitName(unit)
@@ -55,72 +88,6 @@ function ns.Colorize(name, upper)
 
     return string.format("|c%s%s|r", color, name)
 end
-
-function ns.ParseMRTNote()
-    if C_AddOns.IsAddOnLoaded("MRT") and VExRT.Note.Text1 then
-        local text = VExRT.Note.Text1
-        local yaml = false
-        local data = ""
-
-        for line in text:gmatch("[^\r\n]+") do
-            line = line:gsub("||", "|")
-            if line == ">>>" then
-                yaml = true
-            elseif line == "<<<" then
-                return TMDM.YAML.eval(data)
-            elseif yaml then
-                data = data .. line .. "\r\n"
-            end
-        end
-    end
-end
-
-function ns.Frames()
-    local i = 0
-    local frames = {
-        _G["TMDM_MessageFrame"],
-        _G["TMDM_SpecialBar"],
-        _G["TMDM_DiagramFrame"],
-    }
-    return function()
-        i = i + 1
-        if i <= #frames then
-            return frames[i]
-        end
-    end
-end
-
-------------------------------- DIAGRAM SHAPES --------------------------------
-
-local Shape = {}
-
-function Shape:Serialize()
-    local fields = {
-        self.type,
-        self.x or "",
-        self.y or "",
-        self.r or "",
-        self.g or "",
-        self.b or "",
-        self.a or "",
-        self.scale or "",
-        self.angle or "",
-    }
-    return strtrim(strjoin(":", unpack(fields)), ":"):gsub(":0%.", ":.")
-end
-
-setmetatable(Shape, {
-    __call = function(self, object)
-        object = object or {}
-        setmetatable(object, self)
-        self.__index = self
-        return object
-    end,
-})
-
-ns.Shape = Shape
-
-------------------------------- PLAYER SORTING --------------------------------
 
 -- https://github.com/WeakAuras/WeakAuras2/blob/main/WeakAuras/AuraEnvironment.lua#L52
 function ns.IterateGroupMembers(reversed, forceParty)

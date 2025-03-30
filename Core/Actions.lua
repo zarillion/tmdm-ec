@@ -53,7 +53,6 @@ end
 -------------------------------------------------------------------------------
 
 function ns.actions:EmoteMessage(message)
-    message = message:gsub("||", "|") -- restore escape sequences
     local emote = ChatTypeInfo["EMOTE"]
     DEFAULT_CHAT_FRAME:AddMessage(message, emote.r, emote.g, emote.b)
 end
@@ -122,7 +121,7 @@ end
 -------------------------------------------------------------------------------
 
 local function getIconTexture(n)
-    return ("|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d.png:0|t"):format(n)
+    return ("|TInterface/TARGETINGFRAME/UI-RaidTargetingIcon_%d.png:0|t"):format(n)
 end
 
 local RAID_ICONS = {
@@ -148,7 +147,6 @@ local RAID_ICONS = {
 }
 
 local function RenderMessage(message)
-    message = message:gsub("||", "|") -- restore escape sequences
     for name, texture in pairs(RAID_ICONS) do
         local pattern = ("{(%s)}"):format(name)
         message = message:gsub(pattern, texture)
@@ -176,27 +174,45 @@ end
 
 -------------------------------------------------------------------------------
 
+local TEXTURES = "Interface/Addons/" .. ADDON_NAME .. "/Resources/Textures/"
 local SHAPES = {
-    c = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\circle.png",
-    x = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\cross.png",
-    d = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\diamond.png",
-    y = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\heptagon.png",
-    h = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\hexagon.png",
-    m = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\moon.png",
-    o = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\octogon.png",
-    p = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\pentagon.png",
-    s = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\star.png",
-    t = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\triangle.png",
-    g = "Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\tmdm.png",
+    c = TEXTURES .. "circle.png",
+    x = TEXTURES .. "cross.png",
+    d = TEXTURES .. "diamond.png",
+    y = TEXTURES .. "heptagon.png",
+    h = TEXTURES .. "hexagon.png",
+    m = TEXTURES .. "moon.png",
+    o = TEXTURES .. "octogon.png",
+    p = TEXTURES .. "pentagon.png",
+    s = TEXTURES .. "star.png",
+    t = TEXTURES .. "triangle.png",
+    g = TEXTURES .. "tmdm.png",
     -- q = square
+    rt1 = "Interface/TARGETINGFRAME/UI-RaidTargetingIcon_1.png",
+    rt2 = "Interface/TARGETINGFRAME/UI-RaidTargetingIcon_2.png",
+    rt3 = "Interface/TARGETINGFRAME/UI-RaidTargetingIcon_3.png",
+    rt4 = "Interface/TARGETINGFRAME/UI-RaidTargetingIcon_4.png",
+    rt5 = "Interface/TARGETINGFRAME/UI-RaidTargetingIcon_5.png",
+    rt6 = "Interface/TARGETINGFRAME/UI-RaidTargetingIcon_6.png",
+    rt7 = "Interface/TARGETINGFRAME/UI-RaidTargetingIcon_7.png",
+    rt8 = "Interface/TARGETINGFRAME/UI-RaidTargetingIcon_8.png",
 }
 
-function ns.actions:Diagram(lines, shapes, duration)
+function ns.actions:Diagram(lines, shapes, texts, duration)
     if shapes then
         for _, shape in ipairs(shapes) do
-            shape.texture = SHAPES[shape.type]
+            if shape.type:match("^%-?%d+$") then
+                local id = tonumber(shape.type)
+                if id and id > 0 then
+                    shape.texture = id
+                elseif id then
+                    shape.texture = TEXTURES .. string.format("DB/%03d.png", abs(id))
+                end
+            else
+                shape.texture = SHAPES[shape.type]
+            end
         end
     end
     local frame = _G["TMDM_DiagramFrame"]
-    frame:Display(lines, shapes, duration)
+    frame:Display(lines, shapes, texts, duration)
 end

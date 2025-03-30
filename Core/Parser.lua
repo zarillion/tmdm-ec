@@ -139,6 +139,25 @@ local function toshapes(value)
     return shapes
 end
 
+local function totexts(value)
+    -- value == "text,text,text"
+    -- text == "TEXT[:x:y:size:angle]"
+    local texts = {}
+    for i, v in ipairs({ strsplit(",", value) }) do
+        local text, x, y, size, angle = strsplit(":", v)
+        texts[i] = {
+            text = text,
+            position = {
+                x = tonumber(x) or 0,
+                y = tonumber(y) or 0,
+            },
+            size = tonumber(size) or 20,
+            angle = tonumber(angle) or 0,
+        }
+    end
+    return texts
+end
+
 local addonMessageFields = {
     b = { "bar", tospecialbar },
     c = { "chat", tochat },
@@ -153,6 +172,7 @@ local addonMessageFields = {
     s = { "sound", tostring },
     l = { "lines", tolines },
     z = { "shapes", toshapes },
+    t = { "texts", totexts },
 }
 
 --[[ parseField
@@ -177,7 +197,7 @@ each of them. Ignore instruction types that are unrecognized.
 
 ]]
 local function processMessage(addonMessage)
-    -- print("Parsing:", addonMessage, ("(length=%d)"):format(#addonMessage))
+    addonMessage = addonMessage:gsub("||", "|") -- restore escape sequences
 
     -- convert the message to a table of instructions
     local data = {}
@@ -216,8 +236,8 @@ local function processMessage(addonMessage)
         ns.actions:SpecialBar(data.bar)
     end
 
-    if data.lines or data.shapes then
-        ns.actions:Diagram(data.lines, data.shapes, data.duration or 5)
+    if data.lines or data.shapes or data.texts then
+        ns.actions:Diagram(data.lines, data.shapes, data.texts, data.duration or 5)
     end
 
     for i = 1, 3 do
@@ -229,14 +249,14 @@ end
 
 local VALID_CHANNELS = { "PARTY", "RAID", "WHISPER" }
 
---[[ handleMessage
+--[[ HandleMessage
 
 Only allow messages from the PARTY, RAID and WHISPER channels, and only if they
 originate from the current group leader. All other messages are assumed to be
 malicious and ignored.
 
 ]]
-local function handleMessage(message, channel, sender)
+function ns.addon.HandleMessage(message, channel, sender)
     local name, _ = strsplit("-", sender)
     local fromSelf = name == UnitName("player") -- for testing
     local validChannel = ns.Contains(VALID_CHANNELS, channel)
@@ -250,5 +270,5 @@ local MESSAGE_PREFIXES = { "TMDMv1", "TMDM_ECWAv1" } -- backward compat
 for _, prefix in ipairs(MESSAGE_PREFIXES) do
     -- Register the user's client to send/receive our addon messages
     C_ChatInfo.RegisterAddonMessagePrefix(prefix)
-    ns.prefixes[prefix] = handleMessage
+    ns.prefixes[prefix] = ns.addon.HandleMessage
 end

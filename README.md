@@ -4,8 +4,7 @@ The TMDM Encounter Client allows a raid leader to send display information and
 trigger sounds across the raid group.
 
 - [Usage](#usage)
-- [V1 Format](#v1-format)
-- [V2 Format](#v2-format)
+- [Message Format](#message-format)
 
 ## Usage
 
@@ -25,10 +24,10 @@ See
 for an in-depth explanation of how we use this client to minimize aura-related
 progression wipes.
 
-## V1 Format
+## Message Format
 
-The `v1` addon message format allows simple `field=value` pairs to define
-actions the encounter client should take. Each pair is separated by a semicolon.
+The addon message format allows simple `field=value` pairs to define actions the
+encounter client should take. Each pair is separated by a semicolon.
 
     field=value;field=value;field=value
 
@@ -39,11 +38,11 @@ would be:
 
     field=val1:val2:val3,val1:val2:val3,val1:val2:val3
 
-The **entire message** must fit in a single call to
-`C_ChatInfo.SendAddonMessage()`, therefore it cannot exceed 255 characters.
+The `TMDM.Emit(message, channel[, target])` function can be used to send these
+addon messages.
 
 ```lua
-/script C_ChatInfo.SendAddonMessage("TMDMv1", "m=TEST", "WHISPER", UnitName("player"))
+/script TMDM.Emit("m=TEST", "WHISPER", UnitName("player"))
 ```
 
 #### Remember!
@@ -53,23 +52,25 @@ The **entire message** must fit in a single call to
   - Use `WHISPER` to send commands to individuals in the raid.
 - Blizzard will rate limit addon messages if too many are sent in a short time
   period.
-- The message is limited to 255 characters as no serializer is used to split and
-  reconstruct the messages.
+- Messages over 255 characters use the
+  [AceComm](https://www.wowace.com/projects/ace3/pages/api/ace-comm-3-0) library
+  to split and rebuild the messages. This can affect your rate limits!
 
 ### Fields
 
-| Field                        | Action                                          | Example                           |
-| ---------------------------- | ----------------------------------------------- | --------------------------------- |
-| [`b`](#special-resource-bar) | Track a unit resource as a special bar.         | `b=boss1:3:10`                    |
-| [`c`](#chat-messages)        | Trigger a SAY, YELL, RAID or WHISPER message.   | `c=SAY:Something is on me...`     |
-| [`d`](#display-duration)     | Duration for glows & messages (default: 5s)     | `d=10`, `d=6.5`                   |
-| [`e`](#emote-messages)       | Add an emote to the default chat frame          | `e=I messed up!`                  |
-| [`f`](#player-filters)       | Filter the recipients for group messages.       | `f=player1,player2,player3`       |
-| [`g`](#unit-frame-glows)     | Glow multiple player unit frames                | `g=player1,player2,player3`       |
-| [`l`](#diagram-frame)        | Draw one or more lines in the diagram frame.    | `l=-50:-50:50:50`                 |
-| [`m`](#banner-messages)      | Display a large message (also `m1`, `m2`, `m3`) | `m={skull} SOAK MECHANIC {skull}` |
-| [`s`](#sound-notifications)  | Play a sound (FileDataID, sound name or path)   | `s=moan`, `s=569593`              |
-| [`z`](#diagram-frame)        | Draw one or more shapes in the diagram frame.   | `z=c:-50,x:50`                    |
+| Field                        | Action                                            | Example                           |
+| ---------------------------- | ------------------------------------------------- | --------------------------------- |
+| [`b`](#special-resource-bar) | Track a unit resource as a special bar.           | `b=boss1:3:10`                    |
+| [`c`](#chat-messages)        | Trigger a SAY, YELL, RAID or WHISPER message.     | `c=SAY:Something is on me...`     |
+| [`d`](#display-duration)     | Duration for glows & messages (default: 5s)       | `d=10`, `d=6.5`                   |
+| [`e`](#emote-messages)       | Add an emote to the default chat frame            | `e=I messed up!`                  |
+| [`f`](#player-filters)       | Filter the recipients for group messages.         | `f=player1,player2,player3`       |
+| [`g`](#unit-frame-glows)     | Glow multiple player unit frames                  | `g=player1,player2,player3`       |
+| [`l`](#diagram-frame)        | Draw one or more lines in the diagram frame.      | `l=-50:-50:50:50`                 |
+| [`m`](#banner-messages)      | Display a large message (also `m1`, `m2`, `m3`)   | `m={skull} SOAK MECHANIC {skull}` |
+| [`s`](#sound-notifications)  | Play a sound (FileDataID, sound name or path)     | `s=moan`, `s=569593`              |
+| [`t`](#diagram-frame)        | Draw one or more text-boxes in the diagram frame. | `t=HELLO!`                        |
+| [`z`](#diagram-frame)        | Draw one or more shapes in the diagram frame.     | `z=c:-50,x:50`                    |
 
 ### Banner Messages
 
@@ -219,10 +220,11 @@ large generic timer bar.
 
 ### Diagram Frame
 
-A diagram frame for displaying shapes and lines can be shown using the `l` or
-`z` fields.
+A diagram frame for displaying lines, text-boxes and shapes can be shown using
+the `l`, `t` and `z` fields.
 
     l=X:Y:X:Y:[THICKNESS=4]:[R=1]:[G=1]:[B=1]:[A=1],...
+    t=TEXT:[X=0]:[Y=0]:[SIZE=20]:[ANGLE=0],...
     z=SHAPE:[X=0]:[Y=0]:[R=1]:[G=1]:[B=1]:[A=1]:[SCALE=1]:[ANGLE=0],...
 
 Lines are drawn between two XY coordinates and allow the thickness and color to
@@ -248,6 +250,15 @@ is drawn on top of the previous shape.
 | `m`     | Moon     |     | `y`     | Heptagon  |
 | `s`     | Star     |     | `o`     | Octogon   |
 | `t`     | Triangle |     | `g`     | TMDM logo |
+
+Other valid values for `SHAPE`:
+
+- Positive numbers are passed directly to
+  [TextureBase:SetTexture](https://warcraft.wiki.gg/wiki/API_TextureBase_SetTexture)
+  to display Blizzard textures.
+- Negative numbers reference `.png` files in the `Textures/DB` directory of the
+  addon.
+- `rt1` -> `rt8` will display target marker icons.
 
 #### Examples
 
@@ -300,8 +311,3 @@ encounter ends.
 
 - `d=5` (the default)
 - `d=6.5`
-
-## V2 Format
-
-Future plans for a `v2` format would add support for messages over 255
-characters.

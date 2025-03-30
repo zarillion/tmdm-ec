@@ -11,6 +11,7 @@ local TEXTURE_SIZE = 32 -- all shape textures are 32x32
 TMDM_DiagramMixin = {
     textures = {},
     lines = {},
+    texts = {},
     timer = nil,
 }
 
@@ -29,13 +30,20 @@ function TMDM_DiagramMixin:OnLoad()
         end
     end
 
+    for i = 1, 10 do
+        local text = self["Text" .. string.format("%02d", i)]
+        if text then
+            self.texts[#self.texts + 1] = text
+        end
+    end
+
     if not self:IsUserPlaced() then
         self:ClearAllPoints()
         self:SetPoint("CENTER", 400, 50)
     end
 end
 
-function TMDM_DiagramMixin:Display(lines, shapes, duration)
+function TMDM_DiagramMixin:Display(lines, shapes, texts, duration)
     if self.timer then
         self:Stop()
         self.timer:Cancel()
@@ -72,6 +80,18 @@ function TMDM_DiagramMixin:Display(lines, shapes, duration)
         end
     end
 
+    if texts then
+        for i, text in ipairs(texts) do
+            local frame = self.texts[i]
+
+            frame:SetText(text.text)
+            frame:SetTextHeight(text.size)
+            frame:ClearAllPoints()
+            frame:SetPoint("CENTER", text.position.x, text.position.y)
+            frame:SetRotation(text.angle)
+        end
+    end
+
     self.timer = C_Timer.NewTimer(duration, function()
         self:Stop()
     end)
@@ -91,6 +111,11 @@ function TMDM_DiagramMixin:Stop()
         line:SetEndPoint("CENTER", 0, 0)
         line:SetThickness(4)
         line:SetVertexColor(1, 1, 1, 1)
+    end
+    for _, text in ipairs(self.texts) do
+        text:SetText("")
+        text:ClearAllPoints()
+        text:SetRotation(0)
     end
     self:Hide()
 end

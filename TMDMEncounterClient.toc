@@ -6,13 +6,13 @@
 ## X-Curse-Project-ID: 1196605
 
 embeds.xml
-Core/Util.lua
 Core/Main.lua
 Core/Actions.lua
 Core/Commands.lua
-Core/AddonMessageV1.lua
-# Core/AddonMessageV2.lua
+Core/Parser.lua
 Core/YAML.lua
+Core/Util/Aura.lua
+Core/Util/Diagram.lua
 UI/Overlay.xml
 UI/Message.xml
 UI/Diagram.xml
