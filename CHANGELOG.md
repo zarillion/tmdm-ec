@@ -6,6 +6,7 @@
 - Added `TMDM.Emit()` function with support for messages over 255 characters.
 - Added more diagraming utilities.
 - Added background image for Sprocketmonger Lockenstocks's room.
+- Added `TMDM.SPEC` tables for spec ID lookups.
 
 # v2.7
 
