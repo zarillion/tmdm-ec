@@ -30,7 +30,7 @@ function TMDM_DiagramMixin:OnLoad()
         end
     end
 
-    for i = 1, 10 do
+    for i = 1, 20 do
         local text = self["Text" .. string.format("%02d", i)]
         if text then
             self.texts[#self.texts + 1] = text

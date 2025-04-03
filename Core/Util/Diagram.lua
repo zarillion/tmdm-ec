@@ -20,7 +20,8 @@ function Line:Serialize()
         self.b or "",
         self.a or "",
     }
-    return strtrim(strjoin(":", unpack(fields)), ":"):gsub(":0%.", ":.")
+    local value = strtrim(strjoin(":", unpack(fields)), ":"):gsub(":0%.", ":.")
+    return value
 end
 
 setmetatable(Line, {
@@ -46,7 +47,8 @@ function Text:Serialize()
         self.size or "",
         self.angle or "",
     }
-    return strtrim(strjoin(":", unpack(fields)), ":"):gsub(":0%.", ":.")
+    local value = strtrim(strjoin(":", unpack(fields)), ":"):gsub(":0%.", ":.")
+    return value
 end
 
 setmetatable(Text, {
@@ -76,7 +78,8 @@ function Shape:Serialize()
         self.scale or "",
         self.angle or "",
     }
-    return strtrim(strjoin(":", unpack(fields)), ":"):gsub(":0%.", ":.")
+    local value = strtrim(strjoin(":", unpack(fields)), ":"):gsub(":0%.", ":.")
+    return value
 end
 
 setmetatable(Shape, {

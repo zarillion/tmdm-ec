@@ -27,6 +27,9 @@
       </Layer>
       <Layer level="ARTWORK" textureSubLevel="-8">
         <Texture parentKey="Texture01"></Texture>
+      </Layer>
+      <Layer level="ARTWORK" textureSubLevel="-7">
+        <Texture parentKey="Texture02"></Texture>
         <Line parentKey="Line01"></Line>
         <Line parentKey="Line02"></Line>
         <Line parentKey="Line03"></Line>
@@ -38,7 +41,6 @@
         <Line parentKey="Line09"></Line>
         <Line parentKey="Line10"></Line>
       </Layer>
-      <Layer level="ARTWORK" textureSubLevel="-7"><Texture parentKey="Texture02"></Texture></Layer>
       <Layer level="ARTWORK" textureSubLevel="-6"><Texture parentKey="Texture03"></Texture></Layer>
       <Layer level="ARTWORK" textureSubLevel="-5"><Texture parentKey="Texture04"></Texture></Layer>
       <Layer level="ARTWORK" textureSubLevel="-4"><Texture parentKey="Texture05"></Texture></Layer>
@@ -64,6 +66,16 @@
         <FontString parentKey="Text08" text="" inherits="TMDM_DiagramFont"></FontString>
         <FontString parentKey="Text09" text="" inherits="TMDM_DiagramFont"></FontString>
         <FontString parentKey="Text10" text="" inherits="TMDM_DiagramFont"></FontString>
+        <FontString parentKey="Text11" text="" inherits="TMDM_DiagramFont"></FontString>
+        <FontString parentKey="Text12" text="" inherits="TMDM_DiagramFont"></FontString>
+        <FontString parentKey="Text13" text="" inherits="TMDM_DiagramFont"></FontString>
+        <FontString parentKey="Text14" text="" inherits="TMDM_DiagramFont"></FontString>
+        <FontString parentKey="Text15" text="" inherits="TMDM_DiagramFont"></FontString>
+        <FontString parentKey="Text16" text="" inherits="TMDM_DiagramFont"></FontString>
+        <FontString parentKey="Text17" text="" inherits="TMDM_DiagramFont"></FontString>
+        <FontString parentKey="Text18" text="" inherits="TMDM_DiagramFont"></FontString>
+        <FontString parentKey="Text19" text="" inherits="TMDM_DiagramFont"></FontString>
+        <FontString parentKey="Text20" text="" inherits="TMDM_DiagramFont"></FontString>
       </Layer>
     </Layers>
     <Frames>

@@ -13,7 +13,9 @@ Core/Parser.lua
 Core/YAML.lua
 Core/Util/Aura.lua
 Core/Util/Diagram.lua
+Core/Util/Specs.lua
 UI/Overlay.xml
 UI/Message.xml
 UI/Diagram.xml
 UI/SpecialBar.xml
+Core/Sandbox.lua

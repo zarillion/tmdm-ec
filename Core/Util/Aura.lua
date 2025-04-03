@@ -18,6 +18,16 @@ end
 
 -------------------------------------------------------------------------------
 
+function ns.Concat(...)
+    local result = {}
+    for _, t in ipairs({ ... }) do
+        for _, v in ipairs(t) do
+            table.insert(result, v)
+        end
+    end
+    return result
+end
+
 function ns.Contains(values, value)
     for _, v in ipairs(values) do
         if v == value then
@@ -69,7 +79,7 @@ function ns.GetFullUnitName(unit)
     end
 end
 
-function ns.Colorize(name, upper)
+function ns.Colorize(name, upper, maxLength)
     local name, realm = strsplit("-", name)
 
     local color = "FFBBBBBB"
@@ -84,6 +94,10 @@ function ns.Colorize(name, upper)
 
     if upper then
         name = string.upper(name)
+    end
+
+    if maxLength then
+        name = strsub(name, 0, maxLength)
     end
 
     return string.format("|c%s%s|r", color, name)
