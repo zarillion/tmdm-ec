@@ -121,7 +121,7 @@ function TMDM_DiagramMixin:Stop()
 end
 
 function TMDM_DiagramMixin:Unlock()
-    self.textures[1]:SetTexture("Interface\\Addons\\" .. ADDON_NAME .. "\\Resources\\Textures\\tmdm.png")
+    self.textures[1]:SetTexture("Interface\\AddOns\\" .. ADDON_NAME .. "\\Resources\\Textures\\tmdm.png")
     self.textures[1]:ClearAllPoints()
     self.textures[1]:SetPoint("CENTER", 0, 0)
     self.textures[1]:SetSize(100, 100)

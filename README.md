@@ -290,7 +290,7 @@ character count.
 - `s=BigWigs: Alert`
 - `s=bigwigs: alert`
 - `s=BIGWIGS:ALERT`
-- `s=Interface/Addons/BigWigs/Media/Sounds/Alert.ogg`
+- `s=Interface/AddOns/BigWigs/Media/Sounds/Alert.ogg`
 - `s=moan`
 - `s=1348504`
 

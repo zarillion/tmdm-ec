@@ -164,7 +164,7 @@ end
 
 -------------------------------------------------------------------------------
 
-local ICON = "|TInterface/Addons/" .. ADDON_NAME .. "/Resources/Textures/tmdm.png:0|t"
+local ICON = "|TInterface/AddOns/" .. ADDON_NAME .. "/Resources/Textures/tmdm.png:0|t"
 
 ns.addon:RegisterChatCommand("tmdm", function(string)
     local args = { strsplit(" ", string) }

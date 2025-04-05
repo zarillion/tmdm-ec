@@ -4,6 +4,10 @@
 
 local ADDON_NAME, ns = ...
 
+local RESOURCES = "Interface/AddOns/" .. ADDON_NAME .. "/Resources"
+local SOUNDS = RESOURCES .. "/Sounds"
+local TEXTURES = RESOURCES .. "/Textures"
+
 ns.actions = {}
 
 local LCG = LibStub("LibCustomGlow-1.0")
@@ -58,6 +62,8 @@ function ns.actions:EmoteMessage(message)
 end
 
 -------------------------------------------------------------------------------
+
+LSM:Register(LSM.MediaType.SOUND, "TMDM Lust", SOUNDS .. "/lust.mp3")
 
 local function ResolveSoundPath(sound)
     if not (sound:match("^%d+$") or sound:find("[/\\]")) then
@@ -174,19 +180,18 @@ end
 
 -------------------------------------------------------------------------------
 
-local TEXTURES = "Interface/Addons/" .. ADDON_NAME .. "/Resources/Textures/"
 local SHAPES = {
-    c = TEXTURES .. "circle.png",
-    x = TEXTURES .. "cross.png",
-    d = TEXTURES .. "diamond.png",
-    y = TEXTURES .. "heptagon.png",
-    h = TEXTURES .. "hexagon.png",
-    m = TEXTURES .. "moon.png",
-    o = TEXTURES .. "octogon.png",
-    p = TEXTURES .. "pentagon.png",
-    s = TEXTURES .. "star.png",
-    t = TEXTURES .. "triangle.png",
-    g = TEXTURES .. "tmdm.png",
+    c = TEXTURES .. "/circle.png",
+    x = TEXTURES .. "/cross.png",
+    d = TEXTURES .. "/diamond.png",
+    y = TEXTURES .. "/heptagon.png",
+    h = TEXTURES .. "/hexagon.png",
+    m = TEXTURES .. "/moon.png",
+    o = TEXTURES .. "/octogon.png",
+    p = TEXTURES .. "/pentagon.png",
+    s = TEXTURES .. "/star.png",
+    t = TEXTURES .. "/triangle.png",
+    g = TEXTURES .. "/tmdm.png",
     -- q = square
     rt1 = "Interface/TARGETINGFRAME/UI-RaidTargetingIcon_1.png",
     rt2 = "Interface/TARGETINGFRAME/UI-RaidTargetingIcon_2.png",
@@ -206,7 +211,7 @@ function ns.actions:Diagram(lines, shapes, texts, duration)
                 if id and id > 0 then
                     shape.texture = id
                 elseif id then
-                    shape.texture = TEXTURES .. string.format("DB/%03d.png", abs(id))
+                    shape.texture = TEXTURES .. string.format("/DB/%03d.png", abs(id))
                 end
             else
                 shape.texture = SHAPES[shape.type]
