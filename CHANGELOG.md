@@ -1,3 +1,7 @@
+# v2.9
+
+- Fixed up some texture paths.
+
 # v2.8
 
 - Added texture database support to the diagram frame.
