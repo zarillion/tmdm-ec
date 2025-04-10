@@ -9,11 +9,7 @@ local LOR = LibStub("LibOpenRaid-1.0")
 -------------------------------------------------------------------------------
 
 function ns.Emit(message, channel, target)
-    if #message > 255 then
-        ns.addon:SendCommMessage("TMDMv2", message, channel, target, "ALERT")
-    else
-        C_ChatInfo.SendAddonMessage("TMDMv1", message, channel, target)
-    end
+    ns.addon:SendCommMessage("TMDMv2", message, channel, target, "ALERT")
 end
 
 -------------------------------------------------------------------------------
