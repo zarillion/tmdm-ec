@@ -1,3 +1,7 @@
+# v2.10
+
+- Always use ChatThrottleLib when sending messages.
+
 # v2.9
 
 - Fixed up some texture paths.
