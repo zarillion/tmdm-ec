@@ -1,3 +1,7 @@
+# v2.11
+
+- Expand our sound library =)
+
 # v2.10
 
 - Always use ChatThrottleLib when sending messages.
