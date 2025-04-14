@@ -63,7 +63,18 @@ end
 
 -------------------------------------------------------------------------------
 
+LSM:Register(LSM.MediaType.SOUND, "TMDM Circus", SOUNDS .. "/circus.mp3")
+LSM:Register(LSM.MediaType.SOUND, "TMDM Czar", SOUNDS .. "/czar.mp3")
+LSM:Register(LSM.MediaType.SOUND, "TMDM Dave Run", SOUNDS .. "/dave_run.mp3")
+LSM:Register(LSM.MediaType.SOUND, "TMDM GTFO", SOUNDS .. "/gtfo.mp3")
 LSM:Register(LSM.MediaType.SOUND, "TMDM Lust", SOUNDS .. "/lust.mp3")
+LSM:Register(LSM.MediaType.SOUND, "TMDM Move Luda", SOUNDS .. "/move_luda.mp3")
+LSM:Register(LSM.MediaType.SOUND, "TMDM Pork Chop", SOUNDS .. "/pork_chop.mp3")
+LSM:Register(LSM.MediaType.SOUND, "TMDM Raid Cat 1", SOUNDS .. "/raidcat1.mp3")
+LSM:Register(LSM.MediaType.SOUND, "TMDM Raid Cat 2", SOUNDS .. "/raidcat2.mp3")
+LSM:Register(LSM.MediaType.SOUND, "TMDM Raid Cat 3", SOUNDS .. "/raidcat3.mp3")
+LSM:Register(LSM.MediaType.SOUND, "TMDM Saul Horse", SOUNDS .. "/saul_horse.mp3")
+LSM:Register(LSM.MediaType.SOUND, "TMDM Zar Run", SOUNDS .. "/zar_run.mp3")
 
 local function ResolveSoundPath(sound)
     if not (sound:match("^%d+$") or sound:find("[/\\]")) then
