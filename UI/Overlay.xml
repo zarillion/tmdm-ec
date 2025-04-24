@@ -5,7 +5,7 @@
 
   <Script file="Overlay.lua"/>
 
-  <Frame name="TMDM_FrameOverlay" mixin="TMDM_FrameOverlayMixin" inherits="ThinBorderTemplate" virtual="true" hidden="true">
+  <Frame name="TMDM_FrameOverlay" mixin="TMDM_FrameOverlayMixin" virtual="true" hidden="true">
     <Anchors>
       <Anchor point="TOPLEFT" x="0" y="0"/>
       <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
