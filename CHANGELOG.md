@@ -1,3 +1,10 @@
+# v2.12
+
+- Added more spec orders.
+- Fixed a bug in the spec sorting function.
+- Fixed a UI template bug introduced in 11.1.5.
+- Updated TOC for 11.1.5
+
 # v2.11
 
 - Expand our sound library =)
