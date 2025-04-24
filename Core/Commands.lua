@@ -12,6 +12,35 @@ end
 
 -------------------------------------------------------------------------------
 
+local NOTIFY_PREFIX = "TMDM_NOTIFY"
+local LAST_NOTIFY = 0
+
+C_ChatInfo.RegisterAddonMessagePrefix(NOTIFY_PREFIX)
+
+local function SendPlayerNotification()
+    if GetTime() - LAST_NOTIFY < 5 then
+        return -- only 1 notify allowed per 5 seconds
+    end
+
+    if IsInRaid() then
+        C_ChatInfo.SendAddonMessage(NOTIFY_PREFIX, "", "RAID")
+    elseif IsInGroup() then
+        C_ChatInfo.SendAddonMessage(NOTIFY_PREFIX, "", "PARTY")
+    else
+        C_ChatInfo.SendAddonMessage(NOTIFY_PREFIX, "", "WHISPER", UnitName("player"))
+    end
+
+    LAST_NOTIFY = GetTime()
+end
+
+ns.prefixes[NOTIFY_PREFIX] = function(_, _, sender)
+    if C_AddOns.IsAddOnLoaded("WeakAuras") then
+        WeakAuras.ScanEvents("TMDM_NOTIFY", sender)
+    end
+end
+
+-------------------------------------------------------------------------------
+
 -- Addon message prefixes
 local VERSION_PREFIX = "TMDM_ECWAvc"
 
@@ -172,6 +201,8 @@ ns.addon:RegisterChatCommand("tmdm", function(string)
 
     if command == "note" then
         DebugMRTNote()
+    elseif command == "notify" then
+        SendPlayerNotification()
     elseif command == "send" then
         SendCustomMessage(unpack(args))
     elseif command == "test" then
@@ -186,6 +217,7 @@ ns.addon:RegisterChatCommand("tmdm", function(string)
         print(ICON .. " TMDM Encounter Client:")
         print(" ")
         print("    /tmdm note - Debug note assignments.")
+        print("    /tmdm notify - Place this in a macro for certain fights!")
         print("    /tmdm send <target> <message> - Send a custom message.")
         print("    /tmdm test [player] - Send a test message.")
         print("    /tmdm lock - Toggle frame highlights allowing them to be moved.")
