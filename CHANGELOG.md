@@ -1,3 +1,9 @@
+# v2.13
+
+- Added `/tmdm notify` command to trigger special events during encounters.
+- Added SharedMedia_Causese as a required addon dependency.
+- Added `smc:` prefix for sound fields as a shortcut for playing Causese sounds.
+
 # v2.12
 
 - Added more spec orders.

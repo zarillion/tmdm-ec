@@ -1,6 +1,6 @@
 ## Interface: 110105
 ## Title: TMDM Encounter Client
-## Version: 2.12
+## Version: 2.13
 ## Notes: Tired of WAs giving inconsistent assignments yet?
 ## RequiredDeps: SharedMedia_Causese
 ## SavedVariables: TMDM_EC_DB

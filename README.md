@@ -285,6 +285,13 @@ Sounds are played on the `master` sound channel to ensure they are heard by the
 recipient. When passing a sound file path, use `/` instead of `\\` to reduce the
 character count.
 
+[SharedMedia_Causese](https://www.curseforge.com/wow/addons/sharedmedia_causese)
+sounds have complex names that are difficult to match on. They often include
+colors and textures that are difficult to type out in the `s=` field. A shortcut
+has been provided to play these sounds: `s=smc:<name>`. This will play the
+corresponding `.ogg` file in the Causese media addon without searching for it in
+the LibSharedMedia registry.
+
 #### Examples
 
 - `s=BigWigs: Alert`
