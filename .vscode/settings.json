@@ -33,7 +33,8 @@
     "Details",
     "DEFAULT_CHAT_FRAME",
     "AbbreviateLargeNumbers",
-    "VExRT"
+    "VExRT",
+    "WeakAuras"
   ],
   "Lua.workspace.ignoreDir": [
     ".vscode",

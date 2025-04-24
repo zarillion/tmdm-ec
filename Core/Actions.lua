@@ -76,17 +76,26 @@ LSM:Register(LSM.MediaType.SOUND, "TMDM Raid Cat 3", SOUNDS .. "/raidcat3.mp3")
 LSM:Register(LSM.MediaType.SOUND, "TMDM Saul Horse", SOUNDS .. "/saul_horse.mp3")
 LSM:Register(LSM.MediaType.SOUND, "TMDM Zar Run", SOUNDS .. "/zar_run.mp3")
 
+SMC = "Interface/AddOns/SharedMedia_Causese/sound"
+
 local function ResolveSoundPath(sound)
-    if not (sound:match("^%d+$") or sound:find("[/\\]")) then
-        sound = sound:lower():gsub(" ", "")
-        for name, path in pairs(LSM:HashTable("sound")) do
-            if sound == name:lower():gsub(" ", "") then
-                return path
-            end
+    if sound:match("^%d+$") or sound:find("[/\\]") then
+        return sound -- play sound ID or path as-is
+    end
+
+    -- shortcut for playing SharedMedia_Causese sounds
+    if sound:sub(1, 4) == "smc:" then
+        return SMC .. "/" .. sound:sub(5) .. ".ogg"
+    end
+
+    sound = sound:lower():gsub(" ", "")
+    for name, path in pairs(LSM:HashTable("sound")) do
+        if sound == name:lower():gsub(" ", "") then
+            return path
         end
     end
 
-    return sound
+    return sound -- unknown sound value
 end
 
 local LAST_PLAYED = {}

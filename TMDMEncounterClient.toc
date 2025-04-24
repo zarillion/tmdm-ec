@@ -2,6 +2,7 @@
 ## Title: TMDM Encounter Client
 ## Version: 2.12
 ## Notes: Tired of WAs giving inconsistent assignments yet?
+## RequiredDeps: SharedMedia_Causese
 ## SavedVariables: TMDM_EC_DB
 ## X-Curse-Project-ID: 1196605
 
