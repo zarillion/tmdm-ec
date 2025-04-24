@@ -134,6 +134,11 @@ function ns.SortPlayersBySpec(guids, specs)
     table.sort(guids, function(a, b)
         local specA = ns.GUIDSpec(a) or specs[#specs]
         local specB = ns.GUIDSpec(b) or specs[#specs]
-        return ns.IndexOf(specs, specA) < ns.IndexOf(specs, specB)
+        local indexA = ns.IndexOf(specs, specA)
+        local indexB = ns.IndexOf(specs, specB)
+        if indexA and indexB then
+            return indexA < indexB
+        end
+        return indexA and true or false
     end)
 end

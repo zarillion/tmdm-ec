@@ -50,56 +50,108 @@ ns.SPECS.POSITION = {
     [1473] = "RANGED", -- Augmentation Evoker
 }
 
--- By role + mobility
+-- Class spec IDs by mobility
 ns.SPECS.MOBILITY = {
-    HEALER = {
-        270, -- Mistweaver Monk
-        1468, -- Preservation Evoker
-        105, -- Restoration Druid
-        65, -- Holy Paladin
-        264, -- Restoration Shaman
-        256, -- Discipline Priest
-        257, -- Holy Priest
+
+    -- Mobility by position
+    POSITION = {
+        RANGED = {
+            62, -- Arcane Mage
+            63, -- Fire Mage
+            64, -- Frost Mage
+            253, -- Beast Mastery Hunter
+            254, -- Marksmanship Hunter
+            1467, -- Devastation Evoker
+            1468, -- Preservation Evoker
+            1473, -- Augmentation Evoker
+            102, -- Balance Druid
+            105, -- Restoration Druid
+            262, -- Elemental Shaman
+            264, -- Restoration Shaman
+            265, -- Affliction Warlock
+            266, -- Demonology Warlock
+            267, -- Destruction Warlock
+            258, -- Shadow Priest
+            256, -- Discipline Priest
+            257, -- Holy Priest
+        },
+
+        MELEE = {
+            577, -- Havoc Demon Hunter
+            581, -- Vengeance Demon Hunter
+            268, -- Brewmaster Monk
+            269, -- Windwalker Monk
+            270, -- Mistweaver Monk
+            260, -- Outlaw Rogue
+            71, -- Arms Warrior
+            72, -- Fury Warrior
+            73, -- Protection Warrior
+            255, -- Survival Hunter
+            259, -- Assassination Rogue
+            261, -- Subtlety Rogue
+            103, -- Feral Druid
+            104, -- Guardian Druid
+            263, -- Enhancement Shaman
+            65, -- Holy Paladin
+            66, -- Protection Paladin
+            70, -- Retribution Paladin
+            250, -- Blood Death Knight
+            251, -- Frost Death Knight
+            252, -- Unholy Death Knight
+        },
     },
 
-    RANGED = {
-        62, -- Arcane Mage
-        63, -- Fire Mage
-        64, -- Frost Mage
-        253, -- Beast Mastery Hunter
-        254, -- Marksmanship Hunter
-        1467, -- Devastation Evoker
-        1473, -- Augmentation Evoker
-        102, -- Balance Druid
-        262, -- Elemental Shaman
-        265, -- Affliction Warlock
-        266, -- Demonology Warlock
-        267, -- Destruction Warlock
-        258, -- Shadow Priest
-    },
+    -- Mobility by role
+    ROLE = {
+        HEALER = {
+            270, -- Mistweaver Monk
+            1468, -- Preservation Evoker
+            105, -- Restoration Druid
+            65, -- Holy Paladin
+            264, -- Restoration Shaman
+            256, -- Discipline Priest
+            257, -- Holy Priest
+        },
 
-    MELEE = {
-        577, -- Havoc Demon Hunter
-        269, -- Windwalker Monk
-        260, -- Outlaw Rogue
-        71, -- Arms Warrior
-        72, -- Fury Warrior
-        255, -- Survival Hunter
-        259, -- Assassination Rogue
-        261, -- Subtlety Rogue
-        103, -- Feral Druid
-        263, -- Enhancement Shaman
-        70, -- Retribution Paladin
-        251, -- Frost Death Knight
-        252, -- Unholy Death Knight
-    },
+        RANGED = {
+            62, -- Arcane Mage
+            63, -- Fire Mage
+            64, -- Frost Mage
+            253, -- Beast Mastery Hunter
+            254, -- Marksmanship Hunter
+            1467, -- Devastation Evoker
+            1473, -- Augmentation Evoker
+            102, -- Balance Druid
+            262, -- Elemental Shaman
+            265, -- Affliction Warlock
+            266, -- Demonology Warlock
+            267, -- Destruction Warlock
+            258, -- Shadow Priest
+        },
 
-    TANK = {
-        581, -- Vengeance Demon Hunter
-        268, -- Brewmaster Monk
-        73, -- Protection Warrior
-        104, -- Guardian Druid
-        66, -- Protection Paladin
-        250, -- Blood Death Knight
+        MELEE = {
+            577, -- Havoc Demon Hunter
+            269, -- Windwalker Monk
+            260, -- Outlaw Rogue
+            71, -- Arms Warrior
+            72, -- Fury Warrior
+            255, -- Survival Hunter
+            259, -- Assassination Rogue
+            261, -- Subtlety Rogue
+            103, -- Feral Druid
+            263, -- Enhancement Shaman
+            70, -- Retribution Paladin
+            251, -- Frost Death Knight
+            252, -- Unholy Death Knight
+        },
+
+        TANK = {
+            581, -- Vengeance Demon Hunter
+            268, -- Brewmaster Monk
+            73, -- Protection Warrior
+            104, -- Guardian Druid
+            66, -- Protection Paladin
+            250, -- Blood Death Knight
+        },
     },
 }
