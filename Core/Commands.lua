@@ -23,11 +23,11 @@ local function SendPlayerNotification()
     end
 
     if IsInRaid() then
-        C_ChatInfo.SendAddonMessage(NOTIFY_PREFIX, "", "RAID")
+        C_ChatInfo.SendAddonMessage(NOTIFY_PREFIX, "_", "RAID")
     elseif IsInGroup() then
-        C_ChatInfo.SendAddonMessage(NOTIFY_PREFIX, "", "PARTY")
+        C_ChatInfo.SendAddonMessage(NOTIFY_PREFIX, "_", "PARTY")
     else
-        C_ChatInfo.SendAddonMessage(NOTIFY_PREFIX, "", "WHISPER", UnitName("player"))
+        C_ChatInfo.SendAddonMessage(NOTIFY_PREFIX, "_", "WHISPER", UnitName("player"))
     end
 
     LAST_NOTIFY = GetTime()
