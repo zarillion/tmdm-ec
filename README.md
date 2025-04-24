@@ -156,7 +156,7 @@ according to the following table. For players, do not include the realm name.
 
 - `f=Dumbass,Mcgee`
 - `f=r:TANK,r:MELEE,s:256`
-- `f=c:WARLOCK,r:HEAL`
+- `f=c:WARLOCK,r:HEALER`
 
 ### Unit Frame Glows
 
