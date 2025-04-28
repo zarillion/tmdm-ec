@@ -1,3 +1,7 @@
+# v2.14
+
+- Update embedded libraries (LibOpenRaid had some print() statements).
+
 # v2.13
 
 - Added `/tmdm notify` command to trigger special events during encounters.
