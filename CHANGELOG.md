@@ -1,3 +1,7 @@
+# v2.15
+
+- Add experiment to try improving sound consistency.
+
 # v2.14
 
 - Update embedded libraries (LibOpenRaid had some print() statements).
