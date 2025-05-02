@@ -106,7 +106,10 @@ function ns.actions:SoundFile(sound)
 
     local last = LAST_PLAYED[sound] or 0
     if GetTime() - last > 1 then
-        PlaySoundFile(sound, "Master")
+        -- test: sounds not playing because they are piled up on the same event?
+        C_Timer.After(math.random() * 0.05, function()
+            PlaySoundFile(sound, "Master")
+        end)
         LAST_PLAYED[sound] = GetTime()
     end
 end
