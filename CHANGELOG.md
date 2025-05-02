@@ -1,3 +1,7 @@
+# v2.16
+
+- Strip realm names from the filter list before checking.
+
 # v2.15
 
 - Add experiment to try improving sound consistency.
