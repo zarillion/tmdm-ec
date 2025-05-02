@@ -56,7 +56,8 @@ local function tofilters(value)
                 table.insert(filters.specs, target)
             end
         else
-            table.insert(filters.players, filter)
+            local name, _ = strsplit("-", filter) -- remove realm if present
+            table.insert(filters.players, name)
         end
     end
 
