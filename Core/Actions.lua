@@ -121,6 +121,11 @@ local GLOW_COLOR = { 0.95, 0.95, 0.32, 1 } -- yellowish
 function ns.actions:FrameGlow(glow, duration)
     local frame = nil
 
+    -- Convert Creature GUID to boss unit id
+    if glow.unit:find("^Creature-") then
+        glow.unit = TMDM.GetBossUnit(glow.unit)
+    end
+
     if glow.nameplate then
         frame = LGF.GetUnitNameplate(glow.unit)
     else

@@ -1,3 +1,7 @@
+# v2.18
+
+- Allow Creature GUIDs in glows.
+
 # v2.17
 
 - Add texture for Mug'Zee's room.

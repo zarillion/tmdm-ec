@@ -167,6 +167,7 @@ Unit frames and nameplates can be highlighted with a glow using the `g` field.
 The `TYPE` value selects the type of glow that should be used. The remaining
 fields allow you override the color of the glow.
 
+- Unit can be a boss unit GUID as long as it has a `bossX` or `arenaX` frame.
 - A negative `TYPE` value will glow the unit's nameplate instead of unit frame.
 - The [LibGetFrame](https://www.curseforge.com/wow/addons/libgetframe) library
   is used to fetch the requested unit frame.

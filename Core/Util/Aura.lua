@@ -65,6 +65,20 @@ end
 
 ------------------------------- UNIT UTILITIES -------------------------------
 
+function ns.GetBossUnit(guid)
+    for i = 1, 16 do
+        if UnitGUID("boss" .. i) == guid then
+            return "boss" .. i
+        end
+    end
+
+    for i = 1, 8 do
+        if UnitGUID("arena" .. i) == guid then
+            return "arena" .. i
+        end
+    end
+end
+
 function ns.GetFullUnitName(unit)
     local name, realm = UnitName(unit)
     if name then
