@@ -73,9 +73,10 @@ local function toglows(value)
 
         glows[i] = {
             unit = strtrim(unit),
-            type = tonumber(type) or 1,
+            type = abs(tonumber(type) or 1),
             frequency = tonumber(freq),
             scale = tonumber(scale),
+            nameplate = (tonumber(type) or 1) < 0,
         }
 
         local rn = tonumber(r)

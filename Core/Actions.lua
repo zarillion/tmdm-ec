@@ -119,8 +119,15 @@ end
 local GLOW_COLOR = { 0.95, 0.95, 0.32, 1 } -- yellowish
 
 function ns.actions:FrameGlow(glow, duration)
-    local ignorePlayerFrame = glow.unit ~= "player"
-    local frame = LGF.GetUnitFrame(glow.unit, { ignorePlayerFrame = ignorePlayerFrame })
+    local frame = nil
+
+    if glow.nameplate then
+        frame = LGF.GetUnitNameplate(glow.unit)
+    else
+        local ignorePlayerFrame = glow.unit ~= "player"
+        frame = LGF.GetUnitFrame(glow.unit, { ignorePlayerFrame = ignorePlayerFrame })
+    end
+
     if frame then
         if frame._unglowTimer then
             frame._unglowTimer:Cancel()
