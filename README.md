@@ -160,13 +160,14 @@ according to the following table. For players, do not include the realm name.
 
 ### Unit Frame Glows
 
-Unit frames can be highlighted with a glow using the `g` field.
+Unit frames and nameplates can be highlighted with a glow using the `g` field.
 
     g=UNIT:[TYPE=1]:[R:G:B[:A]]:[FREQUENCY]:[SCALE],...
 
 The `TYPE` value selects the type of glow that should be used. The remaining
 fields allow you override the color of the glow.
 
+- A negative `TYPE` value will glow the unit's nameplate instead of unit frame.
 - The [LibGetFrame](https://www.curseforge.com/wow/addons/libgetframe) library
   is used to fetch the requested unit frame.
 - The [LibCustomGlow](https://www.curseforge.com/wow/addons/libcustomglow)

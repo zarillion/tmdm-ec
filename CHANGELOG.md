@@ -1,3 +1,8 @@
+# v2.17
+
+- Add texture for Mug'Zee's room.
+- Allow unit nameplate glows.
+
 # v2.16
 
 - Strip realm names from the filter list before checking.
