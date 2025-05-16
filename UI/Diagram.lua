@@ -75,7 +75,7 @@ function TMDM_DiagramMixin:Display(lines, shapes, texts, duration)
 
             texture:ClearAllPoints()
             texture:SetPoint("CENTER", shape.position.x, shape.position.y)
-            texture:SetRotation(shape.angle)
+            texture:SetRotation(shape.angle * math.pi / 180)
             texture:SetSize(TEXTURE_SIZE * shape.scale, TEXTURE_SIZE * shape.scale)
         end
     end
@@ -88,7 +88,7 @@ function TMDM_DiagramMixin:Display(lines, shapes, texts, duration)
             frame:SetTextHeight(text.size)
             frame:ClearAllPoints()
             frame:SetPoint("CENTER", text.position.x, text.position.y)
-            frame:SetRotation(text.angle)
+            frame:SetRotation(text.angle * math.pi / 180)
         end
     end
 

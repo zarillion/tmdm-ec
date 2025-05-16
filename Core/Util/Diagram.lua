@@ -105,19 +105,19 @@ local function SerializeAll(objects)
     return strings
 end
 
-ns.SerializeDisplay = function(shapes, lines, texts)
+ns.SerializeDisplay = function(data)
     local message = {}
 
-    if shapes and #shapes then
-        table.insert(message, "z=" .. strjoin(",", unpack(SerializeAll(shapes))))
+    if data.shapes and #data.shapes then
+        table.insert(message, "z=" .. strjoin(",", unpack(SerializeAll(data.shapes))))
     end
 
-    if lines and #lines then
-        table.insert(message, "l=" .. strjoin(",", unpack(SerializeAll(lines))))
+    if data.lines and #data.lines then
+        table.insert(message, "l=" .. strjoin(",", unpack(SerializeAll(data.lines))))
     end
 
-    if texts and #texts then
-        table.insert(message, "t=" .. strjoin(",", unpack(SerializeAll(texts))))
+    if data.texts and #data.texts then
+        table.insert(message, "t=" .. strjoin(",", unpack(SerializeAll(data.texts))))
     end
 
     return strjoin(";", unpack(message))
