@@ -92,3 +92,33 @@ setmetatable(Shape, {
 })
 
 ns.Shape = Shape
+
+-------------------------------------------------------------------------------
+
+local function SerializeAll(objects)
+    local strings = {}
+    for _, object in ipairs(objects) do
+        if object then
+            table.insert(strings, object:Serialize())
+        end
+    end
+    return strings
+end
+
+ns.SerializeDisplay = function(shapes, lines, texts)
+    local message = {}
+
+    if shapes and #shapes then
+        table.insert(message, "z=" .. strjoin(",", unpack(SerializeAll(shapes))))
+    end
+
+    if lines and #lines then
+        table.insert(message, "l=" .. strjoin(",", unpack(SerializeAll(lines))))
+    end
+
+    if texts and #texts then
+        table.insert(message, "t=" .. strjoin(",", unpack(SerializeAll(texts))))
+    end
+
+    return strjoin(";", unpack(message))
+end

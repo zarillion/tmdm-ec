@@ -130,6 +130,20 @@ function ns.IterateGroupMembers(reversed, forceParty)
     end
 end
 
+function ns.IterateRaidMembers(includeDead, includeOffline)
+    local maxgroup = (select(3, GetInstanceInfo()) == 16) and 4 or 6
+    local i = 0
+    return function()
+        while i < 40 do
+            i = i + 1
+            local _, _, subgroup, _, _, _, _, online, isDead = GetRaidRosterInfo(i)
+            if subgroup <= maxgroup and (online or includeOffline) and (not isDead or includeDead) then
+                return "raid" .. i
+            end
+        end
+    end
+end
+
 function ns.UnitSpec(unit)
     local info = LOR.GetUnitInfo(unit)
     if info then
