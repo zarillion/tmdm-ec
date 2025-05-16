@@ -1,3 +1,8 @@
+# v2.19
+
+- Added some more utilities.
+- Use degrees instead of radians.
+
 # v2.18
 
 - Allow Creature GUIDs in glows.
