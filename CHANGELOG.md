@@ -1,3 +1,7 @@
+# v2.20
+
+- Updated TOC for 11.2.0
+
 # v2.19
 
 - Added some more utilities.
