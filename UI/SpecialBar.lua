@@ -155,7 +155,6 @@ function TMDM_SpecialBarMixin:Stop()
 end
 
 function TMDM_SpecialBarMixin:Unlock()
-    self:SetMovable(true)
     self:EnableMouse(true)
     self:RegisterForDrag("LeftButton")
     self:SetScript("OnDragStart", function(self)
@@ -169,7 +168,6 @@ function TMDM_SpecialBarMixin:Unlock()
 end
 
 function TMDM_SpecialBarMixin:Lock()
-    self:SetMovable(false)
     self:EnableMouse(false)
     self:RegisterForDrag()
     self:SetScript("OnDragStart", nil)

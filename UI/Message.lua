@@ -66,7 +66,6 @@ function TMDM_MessageMixin:Unlock()
     for index = 1, 3 do
         self["Text" .. index]:SetText("TEST MESSAGE " .. index)
     end
-    self:SetMovable(true)
     self:EnableMouse(true)
     self:RegisterForDrag("LeftButton")
     self:SetScript("OnDragStart", function(self)
@@ -80,7 +79,6 @@ function TMDM_MessageMixin:Unlock()
 end
 
 function TMDM_MessageMixin:Lock()
-    self:SetMovable(false)
     self:EnableMouse(false)
     self:RegisterForDrag()
     self:SetScript("OnDragStart", nil)
