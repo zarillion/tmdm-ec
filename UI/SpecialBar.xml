@@ -5,7 +5,7 @@
 
   <Script file="SpecialBar.lua"/>
 
-  <Frame name="TMDM_SpecialBar" mixin="TMDM_SpecialBarMixin" parent="UIParent" movable="true" clampedToScreen="true" hidden="true">
+  <Frame name="TMDM_SpecialBar" mixin="TMDM_SpecialBarMixin" inherits="TMDM_BaseDisplayFrame" parent="UIParent">
     <Size x="600" y="24" />
     <Layers>
         <Layer level="BACKGROUND">
@@ -50,11 +50,5 @@
           </FontString>
         </Layer>
     </Layers>
-    <Frames>
-      <Frame parentKey="Overlay" inherits="TMDM_FrameOverlay"></Frame>
-    </Frames>
-    <Scripts>
-      <OnLoad method="OnLoad"/>
-    </Scripts>
   </Frame>
 </Ui>

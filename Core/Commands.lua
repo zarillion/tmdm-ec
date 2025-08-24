@@ -130,11 +130,12 @@ end
 
 -------------------------------------------------------------------------------
 
-local LOCKED = true
+ns.locked = true
 
 local function ToggleFrameLocks()
-    if LOCKED then
+    if ns.locked then
         for frame in ns.addon:Frames() do
+            frame:Stop()
             frame:Unlock()
         end
     else
@@ -142,12 +143,12 @@ local function ToggleFrameLocks()
             frame:Lock()
         end
     end
-    LOCKED = not LOCKED
+    ns.locked = not ns.locked
 end
 
 local function ResetFramePositions()
     for frame in ns.addon:Frames() do
-        frame:Reset()
+        frame:ResetPosition()
     end
 end
 

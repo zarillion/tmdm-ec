@@ -36,17 +36,12 @@ function TMDM_DiagramMixin:OnLoad()
             self.texts[#self.texts + 1] = text
         end
     end
-
-    if not self:IsUserPlaced() then
-        self:ClearAllPoints()
-        self:SetPoint("CENTER", 400, 50)
-    end
+    TMDM_BaseDisplayMixin.OnLoad(self)
 end
 
 function TMDM_DiagramMixin:Display(lines, shapes, texts, duration)
     if self.timer then
         self:Stop()
-        self.timer:Cancel()
     end
 
     if lines then
@@ -93,6 +88,7 @@ function TMDM_DiagramMixin:Display(lines, shapes, texts, duration)
     end
 
     self.timer = C_Timer.NewTimer(duration, function()
+        self.timer = nil
         self:Stop()
     end)
 
@@ -100,6 +96,11 @@ function TMDM_DiagramMixin:Display(lines, shapes, texts, duration)
 end
 
 function TMDM_DiagramMixin:Stop()
+    if self.timer then
+        self.timer:Cancel()
+        self.timer = nil
+    end
+
     for _, texture in ipairs(self.textures) do
         texture:SetTexture()
         texture:ClearAllPoints()
@@ -117,7 +118,7 @@ function TMDM_DiagramMixin:Stop()
         text:ClearAllPoints()
         text:SetRotation(0)
     end
-    self:Hide()
+    TMDM_BaseDisplayMixin.Stop(self)
 end
 
 function TMDM_DiagramMixin:Unlock()
@@ -125,30 +126,9 @@ function TMDM_DiagramMixin:Unlock()
     self.textures[1]:ClearAllPoints()
     self.textures[1]:SetPoint("CENTER", 0, 0)
     self.textures[1]:SetSize(100, 100)
-    self:EnableMouse(true)
-    self:RegisterForDrag("LeftButton")
-    self:SetScript("OnDragStart", function(self)
-        self:StartMoving()
-    end)
-    self:SetScript("OnDragStop", function(self)
-        self:StopMovingOrSizing()
-    end)
-    self.Overlay:Show()
-    self:Show()
+    TMDM_BaseDisplayMixin.Unlock(self)
 end
 
-function TMDM_DiagramMixin:Lock()
-    self:EnableMouse(false)
-    self:RegisterForDrag()
-    self:SetScript("OnDragStart", nil)
-    self:SetScript("OnDragStop", nil)
-    self.Overlay:Hide()
-    self:Stop()
-end
-
-function TMDM_DiagramMixin:Reset()
-    self:StartMoving()
-    self:ClearAllPoints()
+function TMDM_DiagramMixin:SetDefaultAnchors()
     self:SetPoint("CENTER", 400, 50)
-    self:StopMovingOrSizing()
 end

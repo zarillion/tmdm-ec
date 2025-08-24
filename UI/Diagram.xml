@@ -12,8 +12,7 @@
     </Shadow>
   </FontString>
 
-  <Frame name="TMDM_DiagramFrame" mixin="TMDM_DiagramMixin" parent="UIParent"
-    movable="true" clampedToScreen="true" clipChildren="true" hidden="true">
+  <Frame name="TMDM_DiagramFrame" mixin="TMDM_DiagramMixin" inherits="TMDM_BaseDisplayFrame" parent="UIParent">
     <Size x="256" y="256" />
     <Layers>
       <Layer level="BACKGROUND">
@@ -78,11 +77,5 @@
         <FontString parentKey="Text20" text="" inherits="TMDM_DiagramFont"></FontString>
       </Layer>
     </Layers>
-    <Frames>
-      <Frame parentKey="Overlay" inherits="TMDM_FrameOverlay"></Frame>
-    </Frames>
-    <Scripts>
-      <OnLoad method="OnLoad"/>
-    </Scripts>
   </Frame>
 </Ui>

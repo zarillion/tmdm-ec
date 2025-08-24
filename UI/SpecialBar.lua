@@ -63,11 +63,7 @@ TMDM_SpecialBarMixin = {}
 
 function TMDM_SpecialBarMixin:OnLoad()
     self.length = self:GetWidth() - 2
-
-    if not self:IsUserPlaced() then
-        self:ClearAllPoints()
-        self:SetPoint("TOP", "TMDM_MessageFrame", "BOTTOM", 0, -5)
-    end
+    TMDM_BaseDisplayMixin.OnLoad(self)
 end
 
 function TMDM_SpecialBarMixin:DisplayUnit(unit, resource, timer, color)
@@ -151,34 +147,15 @@ function TMDM_SpecialBarMixin:Stop()
 
     self:SetScript("OnUpdate", nil)
     self.Spark:Hide()
-    self:Hide()
+    TMDM_BaseDisplayMixin.Stop(self)
 end
 
 function TMDM_SpecialBarMixin:Unlock()
-    self:EnableMouse(true)
-    self:RegisterForDrag("LeftButton")
-    self:SetScript("OnDragStart", function(self)
-        self:StartMoving()
-    end)
-    self:SetScript("OnDragStop", function(self)
-        self:StopMovingOrSizing()
-    end)
-    self.Overlay:Show()
-    self:Show()
+    self.Bar:SetColorTexture(ABSORB_COLOR:GetRGB())
+    self.Text:SetText("TIMER")
+    TMDM_BaseDisplayMixin.Unlock(self)
 end
 
-function TMDM_SpecialBarMixin:Lock()
-    self:EnableMouse(false)
-    self:RegisterForDrag()
-    self:SetScript("OnDragStart", nil)
-    self:SetScript("OnDragStop", nil)
-    self.Overlay:Hide()
-    self:Stop()
-end
-
-function TMDM_SpecialBarMixin:Reset()
-    self:StartMoving()
-    self:ClearAllPoints()
+function TMDM_SpecialBarMixin:SetDefaultAnchors()
     self:SetPoint("TOP", "TMDM_MessageFrame", "BOTTOM", 0, -5)
-    self:StopMovingOrSizing()
 end

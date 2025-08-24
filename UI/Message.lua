@@ -10,13 +10,6 @@ TMDM_MessageMixin = {
     timers = {},
 }
 
-function TMDM_MessageMixin:OnLoad()
-    if not self:IsUserPlaced() then
-        self:ClearAllPoints()
-        self:SetPoint("TOP", 0, -100)
-    end
-end
-
 function TMDM_MessageMixin:IsDisplayed()
     for index = 1, 3 do
         if self.timers[index] then
@@ -59,37 +52,16 @@ function TMDM_MessageMixin:Stop()
     self:Remove(1)
     self:Remove(2)
     self:Remove(3)
-    self:Hide()
+    TMDM_BaseDisplayMixin.Stop(self)
 end
 
 function TMDM_MessageMixin:Unlock()
     for index = 1, 3 do
         self["Text" .. index]:SetText("TEST MESSAGE " .. index)
     end
-    self:EnableMouse(true)
-    self:RegisterForDrag("LeftButton")
-    self:SetScript("OnDragStart", function(self)
-        self:StartMoving()
-    end)
-    self:SetScript("OnDragStop", function(self)
-        self:StopMovingOrSizing()
-    end)
-    self.Overlay:Show()
-    self:Show()
+    TMDM_BaseDisplayMixin.Unlock(self)
 end
 
-function TMDM_MessageMixin:Lock()
-    self:EnableMouse(false)
-    self:RegisterForDrag()
-    self:SetScript("OnDragStart", nil)
-    self:SetScript("OnDragStop", nil)
-    self.Overlay:Hide()
-    self:Stop()
-end
-
-function TMDM_MessageMixin:Reset()
-    self:StartMoving()
-    self:ClearAllPoints()
+function TMDM_MessageMixin:SetDefaultAnchors()
     self:SetPoint("TOP", 0, -100)
-    self:StopMovingOrSizing()
 end

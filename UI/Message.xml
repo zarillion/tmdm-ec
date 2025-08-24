@@ -12,7 +12,7 @@
     </Shadow>
   </FontString>
 
-  <Frame name="TMDM_MessageFrame" mixin="TMDM_MessageMixin" parent="UIParent" movable="true" clampedToScreen="true" hidden="true">
+  <Frame name="TMDM_MessageFrame" mixin="TMDM_MessageMixin" inherits="TMDM_BaseDisplayFrame" parent="UIParent">
     <Size x="600" y="120" />
     <Layers>
       <Layer level="OVERLAY">
@@ -33,11 +33,5 @@
         </FontString>
       </Layer>
     </Layers>
-    <Frames>
-      <Frame parentKey="Overlay" inherits="TMDM_FrameOverlay"></Frame>
-    </Frames>
-    <Scripts>
-      <OnLoad method="OnLoad"/>
-    </Scripts>
   </Frame>
 </Ui>

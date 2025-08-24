@@ -259,6 +259,10 @@ malicious and ignored.
 
 ]]
 function ns.addon.HandleMessage(message, channel, sender)
+    if not ns.locked then
+        return -- ignore messages while frames are unlocked
+    end
+
     local name, _ = strsplit("-", sender)
     local fromSelf = name == UnitName("player") -- for testing
     local validChannel = ns.Contains(VALID_CHANNELS, channel)
